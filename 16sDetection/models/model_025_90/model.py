@@ -30,8 +30,8 @@ K.set_session(sess)
 arr_length = 15625
 batch_size=16
 
-data_train ='../data/train.csv'
-data_valid ='../data/valid.csv'
+data_train ='../../data/train.csv'
+data_valid ='../../data/valid.csv'
 
 model = Sequential()
 model.add(Dropout(0.5, input_shape=(arr_length,)))
