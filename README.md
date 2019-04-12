@@ -17,6 +17,6 @@ experimentName
 |   |   ├──script1.py
 |   |   └──...
 |   |
-|   └───info.txt
+|   └───README.md
 ...
 ```
