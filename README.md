@@ -10,6 +10,7 @@ experimentName
 |   |   |
 |   |   └───modelName
 |   |       ├──model.py
+|   |       ├──model_test.py
 |   |       ├──weights.h5
 |   |       └──trace.log
 |   │   
