@@ -10,6 +10,7 @@ from keras.callbacks import CSVLogger
 from keras.utils import plot_model
 from keras.utils.vis_utils import model_to_dot
 
+
 import pandas as pd
 import csv
 
@@ -22,6 +23,7 @@ import numpy as np
 import tensorflow as tf
 import random as rn
 import struct
+import glob
 
 #Для одинакового результата при разных запусках.
 os.environ['PYTHONHASHSEED'] = '0'
@@ -33,13 +35,10 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 img_size = 80
-batch_size = 64
-epochs = 200
-train_size = 8000
-valid_size = 1000
+p, n, total = 0, 0, 0
 
-data_train ='../../data/train'
-data_valid ='../../data/valid'
+data_dir ='../../data/test'
+weights = 'weights.h5'
 
 model = Sequential()
 
@@ -80,39 +79,27 @@ model.add(Activation('sigmoid'))
 model.add(Dense(4))
 model.add(Activation('sigmoid'))
 
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=
-              optimizers.Adagrad(lr=0.05),
-              metrics=['accuracy'])
-
-train_datagen = ImageDataGenerator()
-valid_datagen = ImageDataGenerator()
+model.load_weights(weights)
 
 
+def test_cls(cls_name, cls_num):
+    files = [f for f in glob.glob(data_dir + '/' + cls_name + '/*.bmp')]
+    for f in files:
+        global total, p, n
+        total += 1
+        img = image.load_img(f, target_size=(img_size, img_size))
+        img = image.img_to_array(img)
+        img = np.expand_dims(img, axis=0)
+        pred = model.predict_classes(img)
+        if pred == [cls_num]:
+            p += 1
+        else:
+            n += 1
 
-train_generator = train_datagen.flow_from_directory(
-        data_train,  
-        target_size=(img_size, img_size),  
-        batch_size=batch_size,
-        class_mode='categorical')  
+test_cls('a', 0)
+test_cls('b', 1)
+test_cls('f', 2)
+test_cls('p', 3)
 
-
-valid_generator = valid_datagen.flow_from_directory(
-        data_valid,
-        target_size=(img_size, img_size),
-        batch_size=batch_size,
-        class_mode='categorical')
-
-csv_logger = CSVLogger('training.log')
-
-model.fit_generator(
-    train_generator,
-    steps_per_epoch=int(train_size/batch_size) - 1,
-    validation_data=valid_generator,
-    validation_steps=int(valid_size/batch_size) - 1,
-    epochs=epochs,
-    verbose=2,
-    callbacks=[csv_logger])
-
-model.save_weights('weights.h5')
+print("Total: ", total)
+print("Positive: ", p, "\r\nNegative: ", n)
