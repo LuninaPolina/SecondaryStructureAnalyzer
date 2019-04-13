@@ -1,6 +1,6 @@
 Binary classification: eukaryotic vs prokaryotic tRNA sequences. Sequence length = 220.
 
-Vectorized data: train.csv, valid.csv, test.csv containing 35000, 15000 and 20000 samples respectively.
+Vectorized data: train.csv, valid.csv and test.csv containing 35000, 15000 and 20000 samples respectively.
 
 Models:
   
