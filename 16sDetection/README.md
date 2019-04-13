@@ -1,6 +1,6 @@
 Binary classification: 16s RNA vs other genomic subsequences. Sequence length = 512.
 
-Vectorized data: train.csv, valid.csv, test.csv containing 21322, 10234 and 7039 samples respectively.
+Vectorized data: train.csv, valid.csv and test.csv containing 21322, 10234 and 7039 samples respectively.
 
 Models:
   
