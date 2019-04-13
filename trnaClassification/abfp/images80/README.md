@@ -1,7 +1,9 @@
 4 classes classification: archaeal, bacterial, fungi and plant tRNA sequences.
 
 Sequences of different length, all images resized to 80x80.
+
 Original images can be found here: https://mega.nz/#!dTJHFA5C!SklRLECVsHUOYty_EQlmwEtg7KjEPGmUJzUaE_rVMOE
+
 Data folders: train, valid and test containing 8000, 1000 and 3000 samples respectively.
 
 Models:
