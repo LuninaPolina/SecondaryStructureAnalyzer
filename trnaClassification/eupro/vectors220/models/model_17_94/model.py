@@ -38,9 +38,9 @@ epochs = 100
 train_size = 35000
 valid_size = 15000
 
-data_train ='../data/train.csv'
-data_valid ='../data/valid.csv'
-db_file = '..data/ref_db.csv'
+data_train ='../../data/train.csv'
+data_valid ='../../data/valid.csv'
+db_file = '../../data/ref_db.csv'
 
 model = Sequential()
 
@@ -108,7 +108,8 @@ model.compile(loss='binary_crossentropy',
               metrics=['accuracy'])
 
 
-def generate_arrays_from_dir(path, batchsz):   
+def generate_arrays_from_dir(path, batchsz):
+    db = pd.read_csv(db_file)   
     while 1:
        with open(path) as f:
             r = csv.reader(f)
@@ -116,7 +117,7 @@ def generate_arrays_from_dir(path, batchsz):
             batchX = []
             batchy = []
             for ln in r:
-                X = np.array(list(np.array(ln[1:(len(ln)-1)],dtype=np.uint32).tobytes()))
+                X = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
                 y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p' else 0
                 batchX.append(np.array(X))
                 batchy.append(y)

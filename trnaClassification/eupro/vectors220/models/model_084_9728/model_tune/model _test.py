@@ -33,15 +33,11 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 arr_length = 3028
-batch_size = 64
-epochs = 1500
-train_size = 35000
-valid_size = 15000
+fp, fn, tp, tn = 0, 0, 0, 0
 
-weights = 'weights.h5 '
-
-data = '../data/test.csv'
-data_len = 69332
+data ='../../../data/test.csv'
+db_file = '../../../data/ref_db.csv'
+weights = 'weights.h5'
 
 model = Sequential()
 
@@ -77,37 +73,39 @@ model.add(Activation('sigmoid'))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
+
 model.load_weights(weights)
 
-def generate_arrays_from_dir(path, batchsz):   
-    while 1:
-       with open(path) as f:
-            r = csv.reader(f)
-            batchCount = 0
-            batchX = []
-            batchy = []
-            for ln in r:
-                X = np.array(list(np.array(ln[1:(len(ln)-1)],dtype=np.uint32).tobytes()))
-                batchX.append(np.array(X))
-                batchCount = batchCount + 1
-                if batchCount == batchsz:
-                    yield (np.array(batchX))
-                    batchCount = 0
-                    batchX = []
-                    batchy = []
 
-#print(model_to_dot(model,  show_layer_names = False,show_shapes=True))
+def generate_arrays(path):
+    db = pd.read_csv(db_file)
+    f = open(path)
+    r = csv.reader(f)
+    batch_x = []
+    batch_y = []
+    for ln in r:
+        if len(ln) > 0:
+            x = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
+            y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p' else 0
+            batch_x.append(np.array(x))
+            batch_y.append(y)
+    return np.array(batch_x), np.array(batch_y)
 
+data = generate_arrays(data)
+res = model.predict_classes(data[0], verbose=0)
+print("Total: ", len(res))
 
-res = model.predict_generator(
-         generate_arrays_from_dir(data,batch_size),
-         steps = data_len/batch_size - 1)
-
-cnt = 0
 for i in range(len(res)):
-    if res[i] < 0.5:
-        cnt = cnt + 1
+    if res[i] == 1 and data[1][i] == 1:
+        tp += 1
+    elif res[i] == 1 and data[1][i] == 0:
+        fp += 1
+    elif res[i] == 0 and data[1][i] == 1:
+        fn += 1
+    else:
+        tn += 1
 
-print (len(res) - cnt)
-print (len(res))
-print (cnt)
+print("True Positive: ", tp, "\r\nFalse Positive: ", fp, "\r\nTrue Negative: ", tn, "\r\nFalse Negative: ", fn)
+
+
+
