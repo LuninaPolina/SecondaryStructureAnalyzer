@@ -93,7 +93,7 @@ def generate_arrays_from_dir(path, batchsz):
             batchy = []
             for ln in r:
                 X = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
-                y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p'
+                y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p' else 0
                 batchX.append(np.array(X))
                 batchy.append(y)
                 batchCount = batchCount + 1
