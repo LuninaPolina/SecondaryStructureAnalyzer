@@ -6,13 +6,14 @@ import csv
 import random
 
 #change here
-train_dir = '/home/polina/Desktop/splitted/train' 
-valid_dir = '/home/polina/Desktop/splitted/valid'
-test_dir = '/home/polina/Desktop/splitted/test'
+train_dir = '../train' 
+valid_dir = '../valid'
+test_dir = '../test'
 
-train_out = '/home/polina/Desktop/splitted/train.csv'
-valid_out = '/home/polina/Desktop/splitted/valid.csv'
-test_out = '/home/polina/Desktop/splitted/test.csv'
+train_out = '../train.csv'
+valid_out = '../valid.csv'
+test_out = '../test.csv'
+
 
 def process_dir(src, out_file):
     with open(out_file, mode='w', newline='') as out:
