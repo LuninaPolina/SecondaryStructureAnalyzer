@@ -36,8 +36,8 @@ arr_length = 3028
 input_length = 220
 fp, fn, tp, tn = 0, 0, 0, 0
 
-data ='../../data/test.csv'
-db_file = '../../data/ref_db.csv'
+data ='/home/polina/Desktop/big_test.csv'
+db_file = '/home/polina/Desktop/ref_db.csv'
 weights = 'weights.h5'
 
 model = Sequential()
