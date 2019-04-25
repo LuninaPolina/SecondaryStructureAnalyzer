@@ -10,7 +10,6 @@ from keras.callbacks import CSVLogger
 from keras.utils import plot_model
 from keras.utils.vis_utils import model_to_dot
 
-
 import pandas as pd
 import csv
 
@@ -23,7 +22,6 @@ import numpy as np
 import tensorflow as tf
 import random as rn
 import struct
-import glob
 
 #Для одинакового результата при разных запусках.
 os.environ['PYTHONHASHSEED'] = '0'
@@ -34,28 +32,28 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-img_size = 80
-t, f, total = 0, 0, 0
+arr_length = 3028
+t, f = 0, 0
 
-data_dir ='../../data/test'
+data ='../../data/test.csv'
+db_file = '../../data/ref_db.csv'
 weights = 'weights.h5'
-
-data_train ='../../data/train'
-data_valid ='../../data/valid'
 
 model = Sequential()
 
-if K.image_data_format() == 'channels_first':
- input_shape = (3, img_size, img_size)
-else:
- input_shape = (img_size, img_size, 3)
+model.add(Dropout(0.3, input_shape=(arr_length,)))
 
-model.add(Conv2D(5, (3, 3), input_shape=input_shape))
+model.add(Dense(8194))
+model.add(BatchNormalization())
 model.add(Activation('relu'))
 
-model.add(Flatten())
+model.add(Dropout(0.9))
 
-model.add(Dropout(0.3))
+model.add(Dense(2048))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.9))
 
 model.add(Dense(1024))
 model.add(BatchNormalization())
@@ -63,13 +61,8 @@ model.add(Activation('relu'))
 
 model.add(Dropout(0.9))
 
+
 model.add(Dense(512))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-
-model.add(Dropout(0.9))
-
-model.add(Dense(128))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
@@ -83,25 +76,34 @@ model.add(Activation('sigmoid'))
 
 model.load_weights(weights)
 
+def generate_arrays(path):
+    db = pd.read_csv(db_file)
+    f = open(path)
+    r = csv.reader(f)
+    batch_x = []
+    batch_y = []
+    for ln in r:
+        if len(ln) > 0:
+            x = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
+            y = [1, 0, 0, 0]
+            if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'b':
+                    y = [0, 1, 0, 0]
+            if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'f':
+                    y = [0, 0, 1, 0]
+            if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p':
+                    y = [0, 0, 0, 1]
+            batch_x.append(np.array(x))
+            batch_y.append(y)
+    return np.array(batch_x), np.array(batch_y)
 
-def test_cls(cls_name, cls_num):
-    files = [f for f in glob.glob(data_dir + '/' + cls_name + '/*.bmp')]
-    for f in files:
-        global total, t, f
-        total += 1
-        img = image.load_img(f, target_size=(img_size, img_size))
-        img = image.img_to_array(img)
-        img = np.expand_dims(img, axis=0)
-        pred = model.predict_classes(img)
-        if pred == [cls_num]:
-            t += 1
-        else:
-            f += 1
+data = generate_arrays(data)
+res = model.predict_classes(data[0], verbose=0)
+print("Total: ", len(res))
 
-test_cls('a', 0)
-test_cls('b', 1)
-test_cls('f', 2)
-test_cls('p', 3)
+for i in range(len(res)):
+    if res[i] == list(data[1][i]).index(1):
+        t += 1
+    else:
+        f += 1
 
-print("Total: ", total)
 print("True: ", t, "\r\nFalse: ", f)

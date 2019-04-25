@@ -34,9 +34,9 @@ K.set_session(sess)
 
 arr_length = 3028
 batch_size = 64
-epochs = 1500
-train_size = 20000
-valid_size = 5000
+epochs = 1000
+train_size = 8000
+valid_size = 1000
 
 data_train ='../../data/train.csv'
 data_valid ='../../data/valid.csv'
@@ -74,7 +74,7 @@ model.add(Dropout(0.75))
 model.add(Dense(64))
 model.add(Activation('sigmoid'))
 
-model.add(Dense(1))
+model.add(Dense(4))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
@@ -93,7 +93,13 @@ def generate_arrays_from_dir(path, batchsz):
             batchy = []
             for ln in r:
                 X = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
-                y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p' else 0
+                y = [1, 0, 0, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'b':
+                    y = [0, 1, 0, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'f':
+                    y = [0, 0, 1, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p':
+                    y = [0, 0, 0, 1]
                 batchX.append(np.array(X))
                 batchy.append(y)
                 batchCount = batchCount + 1

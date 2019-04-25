@@ -37,7 +37,7 @@ batch_size = 64
 input_length = 220
 train_size = 20000
 valid_size = 5000
-epochs = 150
+epochs = 100
 
 data_train = '../../data/train.csv'
 data_valid = '../../data/valid.csv'

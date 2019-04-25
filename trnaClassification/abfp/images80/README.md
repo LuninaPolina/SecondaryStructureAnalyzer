@@ -7,5 +7,5 @@ Data folders: train, valid and test containing 8000, 1000 and 3000 samples respe
 Models:
   
 1. model_27_94
-   * test results: positive = 2796, negative = 204
+   * test results: true = 2796, false = 204
    * test accuracy = 93.2%
