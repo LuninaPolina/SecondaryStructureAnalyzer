@@ -6,8 +6,7 @@ Approaches (on the same data):
   
 **Images** 
 
-Original sequences of different length 
-Parsing-provided images resized to 80x80
+Original sequences of different length. Parsing-provided images resized to 80x80
 
 1. model_08_97
    * test results: TP = 4925, TN = 4696, FP = 304, FN = 75 
@@ -17,8 +16,7 @@ Parsing-provided images resized to 80x80
 
 **Vectors**
 
-Origial sequences of length 220
-Parsing-provided uint32 vectors decompressed to bytes
+Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to bytes
 
 1. model_16_95
    * test results: TP = 4807, TN = 4606, FP = 394, FN = 193 
@@ -28,8 +26,7 @@ Parsing-provided uint32 vectors decompressed to bytes
 
 **Vectors extended to sequences**
 
-Original sequences of length 220
-Extending trained model for vectorized data (eupro/vectors220/models/model_16_95)
+Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors220/models/model_16_95)
 
 1. model_05_98
    * test results: TP = 4971, TN = 4782, FP = 218, FN = 29 
@@ -39,8 +36,7 @@ Extending trained model for vectorized data (eupro/vectors220/models/model_16_95
 
 **Images extended to sequences**
 
-Original sequences of length 220
-Extending trained model for image data (eupro/images80/models/model_08_97)
+Original sequences of length 220. Extending trained model for image data (eupro/images80/models/model_08_97)
 
 1. model_062_987
    * test results: TP = 4974, TN = 4801, FP = 199, FN = 26 
