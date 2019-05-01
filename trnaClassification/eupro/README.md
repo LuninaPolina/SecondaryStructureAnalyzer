@@ -26,7 +26,7 @@ Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to
 
 **Vectors extended to sequences**
 
-Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors220/models/model_16_95)
+Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors/models/model_16_95)
 
 1. model_05_98
    * test results: TP = 4971, TN = 4782, FP = 218, FN = 29 
@@ -36,7 +36,7 @@ Original sequences of length 220. Extending trained model for vectorized data (e
 
 **Images extended to sequences**
 
-Original sequences of length 220. Extending trained model for image data (eupro/images80/models/model_08_97)
+Original sequences of length 220. Extending trained model for image data (eupro/images/models/model_08_97)
 
 1. model_062_987
    * test results: TP = 4974, TN = 4801, FP = 199, FN = 26 
@@ -47,6 +47,8 @@ Original sequences of length 220. Extending trained model for image data (eupro/
 
 --------------------------------------------------------------------------------- 
 --------------------------------------------------------------------------------- 
+
+TOFIX
 
 Models for sequence data were also evaluated on a big dataset with 65000 total samples: 
 https://mega.nz/#!pbo3RSTD!Ag0qei1yHZ39CmYOQSuu0mqcJazA5E9mNscTIuimmNQ

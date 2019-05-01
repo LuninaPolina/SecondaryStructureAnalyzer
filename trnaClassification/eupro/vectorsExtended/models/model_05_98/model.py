@@ -42,7 +42,7 @@ epochs = 100
 data_train = '../../data/train.csv'
 data_valid = '../../data/valid.csv'
 db_file = '../../data/ref_db.csv'
-weights = '../../../vectors220/models/model_16_95/weights.h5'
+weights = '../../../vectors/models/model_16_95/weights.h5'
 
 model = Sequential()
 

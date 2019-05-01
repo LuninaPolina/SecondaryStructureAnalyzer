@@ -23,6 +23,7 @@ import tensorflow as tf
 import random as rn
 import struct
 
+
 #Для одинакового результата при разных запусках.
 os.environ['PYTHONHASHSEED'] = '0'
 np.random.seed(42)
@@ -33,18 +34,17 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 
-
-data_train = '../../data/train.csv'
-data_valid = '../../data/valid.csv'
+data_train ='../../data/train.csv'
+data_valid ='../../data/valid.csv'
 db_file = '../../data/ref_db.csv'
-weights = '../../../images/models/model_08_97/weights.h5'
+weights = '/../../../images/models/model_30_94/weights.h5'
 
 img_size = 80
 input_length = 220
 batch_size = 64
 epochs = 150
-train_size = 20000
-valid_size = 5000
+train_size = 8000
+valid_size = 1000
 
 
 model = Sequential()
@@ -77,13 +77,14 @@ model.add(Dense(128))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
-model.add(Dropout(0.75))
+model.add(Dropout(0.5))
 
 model.add(Dense(64))
-model.add(Activation('sigmoid'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
 
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
+model.add(Dense(4))
+model.add(Activation('softmax'))
 
 model.load_weights(weights)
 weights_list = model.get_weights()
@@ -105,7 +106,13 @@ model2.add(BatchNormalization())
 model2.add(Activation('relu'))
 
 
-model2.add(Dense(1024))
+model2.add(Dense(30420))
+model2.add(BatchNormalization())
+model2.add(Activation('relu'))
+
+model2.add(Dropout(0.3))
+
+model2.add(Dense(1024, weights=[weights_list[2], weights_list[3]]))
 model2.add(BatchNormalization())
 model2.add(Activation('relu'))
 
@@ -124,13 +131,16 @@ model2.add(Activation('relu'))
 model2.add(Dropout(0.75))
 
 model2.add(Dense(64,  weights=[weights_list[20], weights_list[21]]))
-model2.add(Activation('sigmoid'))
+model2.add(BatchNormalization())
+model2.add(Activation('relu'))
 
-model2.add(Dense(1, weights=[weights_list[22], weights_list[23]]))
-model2.add(Activation('sigmoid'))
+model2.add(Dropout(0.5))
+
+model2.add(Dense(4, weights=[weights_list[26], weights_list[27]]))
+model2.add(Activation('softmax'))
 
 
-model2.compile(loss='binary_crossentropy',
+model2.compile(loss='categorical_crossentropy',
               optimizer=
               optimizers.Adagrad(lr=0.05),
               metrics=['accuracy'])
@@ -152,7 +162,13 @@ def generate_arrays_from_dir(path, batchsz):
                     elif ln[i] == "T": ln[i] = "7"
                     else: ln[i] = "0"
                 X = np.array(ln[1:len(ln)],dtype=np.uint32)
-                y = 1 if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p' else 0
+                y = [1, 0, 0, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'b':
+                    y = [0, 1, 0, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'f':
+                    y = [0, 0, 1, 0]
+                if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p':
+                    y = [0, 0, 0, 1]
                 batchX.append(np.array(X))
                 batchy.append(y)
                 batchCount = batchCount + 1
@@ -169,7 +185,7 @@ model2.fit_generator(
     validation_data=generate_arrays_from_dir(data_valid,batch_size),
     validation_steps=int(valid_size/batch_size) - 1,
     epochs=epochs,
-    verbose=1,
+    verbose=2,
     callbacks=[csv_logger])
 
 model2.save_weights('weights.h5')

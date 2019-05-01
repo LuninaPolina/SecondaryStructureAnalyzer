@@ -34,7 +34,7 @@ K.set_session(sess)
 
 img_size = 80
 batch_size = 64
-epochs = 200
+epochs = 300
 train_size = 8000
 valid_size = 1000
 
@@ -74,10 +74,13 @@ model.add(Activation('relu'))
 model.add(Dropout(0.75))
 
 model.add(Dense(64))
-model.add(Activation('sigmoid'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.5))
 
 model.add(Dense(4))
-model.add(Activation('sigmoid'))
+model.add(Activation('softmax'))
 
 
 model.compile(loss='categorical_crossentropy',

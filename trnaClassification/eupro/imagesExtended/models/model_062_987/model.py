@@ -37,7 +37,7 @@ K.set_session(sess)
 data_train = '../../data/train.csv'
 data_valid = '../../data/valid.csv'
 db_file = '../../data/ref_db.csv'
-weights = '../../../images80/models/model_08_97/weights.h5'
+weights = '../../../images/models/model_08_97/weights.h5'
 
 img_size = 80
 input_length = 220

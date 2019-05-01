@@ -35,13 +35,11 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 img_size = 80
-t, f, total = 0, 0, 0
+true, false, total = 0, 0, 0
 
-data_dir ='../../data/test'
+data ='../../data/test'
 weights = 'weights.h5'
 
-data_train ='../../data/train'
-data_valid ='../../data/valid'
 
 model = Sequential()
 
@@ -76,27 +74,30 @@ model.add(Activation('relu'))
 model.add(Dropout(0.75))
 
 model.add(Dense(64))
-model.add(Activation('sigmoid'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.5))
 
 model.add(Dense(4))
-model.add(Activation('sigmoid'))
+model.add(Activation('softmax'))
 
 model.load_weights(weights)
 
 
 def test_cls(cls_name, cls_num):
-    files = [f for f in glob.glob(data_dir + '/' + cls_name + '/*.bmp')]
+    files = [f for f in glob.glob(data + '/' + cls_name + '/*.bmp')]
     for f in files:
-        global total, t, f
+        global total, true, false
         total += 1
         img = image.load_img(f, target_size=(img_size, img_size))
         img = image.img_to_array(img)
         img = np.expand_dims(img, axis=0)
         pred = model.predict_classes(img)
         if pred == [cls_num]:
-            t += 1
+            true += 1
         else:
-            f += 1
+            false += 1
 
 test_cls('a', 0)
 test_cls('b', 1)
@@ -104,4 +105,4 @@ test_cls('f', 2)
 test_cls('p', 3)
 
 print("Total: ", total)
-print("True: ", t, "\r\nFalse: ", f)
+print("True: ", true, "\r\nFalse: ", false)

@@ -42,7 +42,7 @@ epochs = 100
 data_train ='../../data/train.csv'
 data_valid ='../../data/valid.csv'
 db_file = '../../data/ref_db.csv'
-weights = '../../../vectors220/models/model_19_94/weights.h5'
+weights = '../../../vectors220/models/model_51_88/weights.h5'
 
 model = Sequential()
 
@@ -66,6 +66,7 @@ model.add(Activation('relu'))
 
 model.add(Dropout(0.9))
 
+
 model.add(Dense(512, trainable=False))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
@@ -73,10 +74,14 @@ model.add(Activation('relu'))
 model.add(Dropout(0.75))
 
 model.add(Dense(64, trainable=False))
-model.add(Activation('sigmoid'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.5))
 
 model.add(Dense(4, trainable=False))
-model.add(Activation('sigmoid'))
+model.add(Activation('softmax'))
+
 
 model.load_weights(weights)
 
@@ -104,10 +109,11 @@ model2.add(Activation('relu'))
 
 model2.add(model)
 
-model2.compile(loss='binary_crossentropy',
+model2.compile(loss='categorical_crossentropy',
               optimizer=
               optimizers.Adagrad(lr=0.05),
               metrics=['accuracy'])
+
 
 
 def generate_arrays_from_dir(path, batchsz):
@@ -141,7 +147,6 @@ def generate_arrays_from_dir(path, batchsz):
                     batchCount = 0
                     batchX = []
                     batchy = []
-
 csv_logger = CSVLogger('training.log')
 model2.fit_generator(
     generate_arrays_from_dir(data_train,batch_size),
@@ -149,7 +154,7 @@ model2.fit_generator(
     validation_data=generate_arrays_from_dir(data_valid,batch_size),
     validation_steps=int(valid_size/batch_size) - 1,
     epochs=epochs,
-    verbose=1,
+    verbose=2,
     callbacks=[csv_logger])
 
 model2.save_weights('weights.h5')
