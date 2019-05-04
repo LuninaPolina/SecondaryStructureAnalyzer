@@ -7,7 +7,7 @@ seq_file = '/home/polina/Desktop/all_seq.fasta'
 db_file = '/home/polina/Desktop/ref_db.csv'
 train_file = '../train.csv'
 valid_file = '../valid.csv'
-test_file = '/home/polina/Desktop/big_test.csv'
+test_file = '/home/polina/Desktop/test.csv'
 
 train, valid, test = [], [], []
 
@@ -31,8 +31,8 @@ with open(seq_file, 'r') as f:
         else:
             test.append(sample)
 
-#rn.shuffle(train)
-#rn.shuffle(valid)
+rn.shuffle(train)
+rn.shuffle(valid)
 rn.shuffle(test)
 
 def write_selection(file, data):
