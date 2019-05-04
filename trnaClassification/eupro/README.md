@@ -50,8 +50,9 @@ Original sequences of length 220. Extending trained model for image data (eupro/
 
 Models for sequence data were also evaluated on 2 full tRNA databases.
 
-Database1: http://gtrnadb2009.ucsc.edu/ ; eukaryotic:procaryotic = 84464:26645
-Database2: http://trna.ie.niigata-u.ac.jp/ ; eukaryotic:procaryotic = 3534:507388
+Database1: http://gtrnadb2009.ucsc.edu/ (eukaryotic:procaryotic = 84464:26645)
+
+Database2: http://trna.ie.niigata-u.ac.jp/ (eukaryotic:procaryotic = 3534:507388)
 
 Test results:
 
