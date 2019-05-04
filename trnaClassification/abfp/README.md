@@ -25,10 +25,10 @@ Original sequences of different length. Parsing-provided images resized to 80x80
 | P       	| 2   	| 15  	| 18  	| 702 	|
 
    * accuracy = 96.2%
-   * precision<sub>a</sub> = 94.2%		* recall<sub>a</sub> = 92.4%
-   * precision<sub>b</sub> = 95.7%		* recall<sub>b</sub> = 91.2%
-   * precision<sub>f</sub> = 88.7%		* recall<sub>f</sub> = 96.0%
-   * precision<sub>p</sub> = 95.3%		* recall<sub>p</sub> = 93.6%
+   * precision<sub>a</sub> = 94.2%        recall<sub>a</sub> = 92.4%
+   * precision<sub>b</sub> = 95.7%        recall<sub>b</sub> = 91.2%
+   * precision<sub>f</sub> = 88.7%        recall<sub>f</sub> = 96.0%
+   * precision<sub>p</sub> = 95.3%        recall<sub>p</sub> = 93.6%
    
 ---------------------------------------------------------------------------------  
 
@@ -40,16 +40,16 @@ Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
-| A       	| 591	| 18  	| 11  	| 10   	|
-| B       	| 72  	| 662 	| 24   	| 30  	|
+| A       	| 591	 | 18  	| 11  	| 10   |
+| B       	| 72  	| 662 	| 24  	| 30  	|
 | F       	| 51  	| 39  	| 685 	| 48  	|
-| P       	| 36   	| 31  	| 30  	| 662 	|
+| P       	| 36   | 31  	| 30  	| 662 	|
 
    * accuracy = 86.7%
-   * precision<sub>a</sub> = 93.8%		* recall<sub>a</sub> = 78.8%
-   * precision<sub>b</sub> = 84.0%		* recall<sub>b</sub> = 88.3%
-   * precision<sub>f</sub> = 83.2%		* recall<sub>f</sub> = 91.3%
-   * precision<sub>p</sub> = 87.2%		* recall<sub>p</sub> = 88.3%
+   * precision<sub>a</sub> = 93.8%        recall<sub>a</sub> = 78.8%
+   * precision<sub>b</sub> = 84.0%        recall<sub>b</sub> = 88.3%
+   * precision<sub>f</sub> = 83.2%        recall<sub>f</sub> = 91.3%
+   * precision<sub>p</sub> = 87.2%        recall<sub>p</sub> = 88.3%
 
 --------------------------------------------------------------------------------- 
 
@@ -61,16 +61,16 @@ Original sequences of length 220. Extending trained model for image data (abfp/i
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
-| A       	| 739	| 33  	| 25  	| 10   	|
-| B       	| 6  	| 716 	| 13   	| 17  	|
-| F       	| 4  	| 1  	| 707 	| 13  	|
-| P       	| 1   	| 0  	| 5  	| 710 	|
+| A       	| 739	 | 33  	| 25  	| 10   |
+| B       	| 6   	| 716 	| 13  	| 17  	|
+| F       	| 4   	| 1  	 | 707 	| 13  	|
+| P       	| 1   	| 0   	| 5   	| 710 	|
 
    * accuracy = 95.7%
-   * precision<sub>a</sub> = 91.6%		* recall<sub>a</sub> = 98.5%
-   * precision<sub>b</sub> = 95.2%		* recall<sub>b</sub> = 95.5%
-   * precision<sub>f</sub> = 97.5%		* recall<sub>f</sub> = 94.3%
-   * precision<sub>p</sub> = 99.2%		* recall<sub>p</sub> = 94.7%
+   * precision<sub>a</sub> = 91.6%        recall<sub>a</sub> = 98.5%
+   * precision<sub>b</sub> = 95.2%        recall<sub>b</sub> = 95.5%
+   * precision<sub>f</sub> = 97.5%        recall<sub>f</sub> = 94.3%
+   * precision<sub>p</sub> = 99.2%        recall<sub>p</sub> = 94.7%
 
 --------------------------------------------------------------------------------- 
 
@@ -82,13 +82,13 @@ Original sequences of length 220. Extending trained model for vectorized data (a
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
-| A       	| 744	| 36  	| 25  	| 12   	|
-| B       	| 3  	| 713 	| 10   	| 12  	|
-| F       	| 2  	| 1  	| 712 	| 8  	|
-| P       	| 1   	| 0  	| 3  	| 718 	|
+| A       	| 744 	| 36  	| 25  	| 12   |
+| B       	| 3  	 | 713 	| 10   | 12  	|
+| F       	| 2  	 | 1   	| 712 	| 8  	 |
+| P       	| 1   	| 0   	| 3   	| 718 	|
 
    * accuracy = 96.2%
-   * precision<sub>a</sub> = 91.1%		* recall<sub>a</sub> = 99.2%
-   * precision<sub>b</sub> = 96.6%		* recall<sub>b</sub> = 95.1%
-   * precision<sub>f</sub> = 98.5%		* recall<sub>f</sub> = 94.9%
-   * precision<sub>p</sub> = 99.4%		* recall<sub>p</sub> = 95.7%
+   * precision<sub>a</sub> = 91.1%        recall<sub>a</sub> = 99.2%
+   * precision<sub>b</sub> = 96.6%        recall<sub>b</sub> = 95.1%
+   * precision<sub>f</sub> = 98.5%        recall<sub>f</sub> = 94.9%
+   * precision<sub>p</sub> = 99.4%        recall<sub>p</sub> = 95.7%
