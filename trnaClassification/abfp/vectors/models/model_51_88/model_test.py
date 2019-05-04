@@ -32,12 +32,16 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-arr_length = 3028
-t, f = 0, 0
-
 data ='../../data/test.csv'
 db_file = '../../data/ref_db.csv'
 weights = 'weights.h5'
+
+a = [0, 0, 0, 0]
+b = [0, 0, 0, 0]
+f = [0, 0, 0, 0]
+p = [0, 0, 0, 0]
+
+arr_length = 3028
 
 model = Sequential()
 
@@ -100,13 +104,38 @@ def generate_arrays(path):
     return np.array(batch_x), np.array(batch_y)
 
 data = generate_arrays(data)
-res = model.predict_classes(data[0], verbose=0)
-print("Total: ", len(res))
+result = model.predict_classes(data[0], verbose=0)
 
-for i in range(len(res)):
-    if res[i] == list(data[1][i]).index(1):
-        t += 1
-    else:
-        f += 1
+def precision(cl, row):
+    return row[cl] / sum(row)
 
-print("True: ", t, "\r\nFalse: ", f)
+def recall(cl, col):
+    return col[cl] / sum(col)
+
+for i in range(len(result)):
+    res = result[i]
+    lbl = list(data[1][i]).index(1)
+    if lbl == 0:
+        a[res] += 1
+    if lbl == 1:
+        b[res] += 1
+    if lbl == 2:
+        f[res] += 1
+    if lbl == 3:
+        p[res] += 1        
+        
+print(a)
+print(b)
+print(f)
+print(p)
+
+
+print('prec(a) =', precision(0, [a[0], b[0], f[0], p[0]]))
+print('prec(b) =', precision(1, [a[1], b[1], f[1], p[1]]))
+print('prec(f) =', precision(2, [a[2], b[2], f[2], p[2]]))
+print('prec(p) =', precision(3, [a[3], b[3], f[3], p[3]]))
+
+print('rec(a) =', recall(0, a))
+print('rec(b) =', recall(1, b))
+print('rec(f) =', recall(2, f))
+print('rec(p) =', recall(3, p))

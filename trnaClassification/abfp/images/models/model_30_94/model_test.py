@@ -34,12 +34,16 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-img_size = 80
-true, false, total = 0, 0, 0
-
 data ='../../data/test'
 weights = 'weights.h5'
 
+
+img_size = 80
+
+a = [0, 0, 0, 0]
+b = [0, 0, 0, 0]
+f = [0, 0, 0, 0]
+p = [0, 0, 0, 0]
 
 model = Sequential()
 
@@ -85,24 +89,38 @@ model.add(Activation('softmax'))
 model.load_weights(weights)
 
 
-def test_cls(cls_name, cls_num):
+def precision(cl, row):
+    return row[cl] / sum(row)
+
+def recall(cl, col):
+    return col[cl] / sum(col)
+    
+def test_cls(cls_name, cls_num, res):
     files = [f for f in glob.glob(data + '/' + cls_name + '/*.bmp')]
     for f in files:
-        global total, true, false
-        total += 1
         img = image.load_img(f, target_size=(img_size, img_size))
         img = image.img_to_array(img)
         img = np.expand_dims(img, axis=0)
         pred = model.predict_classes(img)
-        if pred == [cls_num]:
-            true += 1
-        else:
-            false += 1
+        res[pred[0]] += 1
+    return res
 
-test_cls('a', 0)
-test_cls('b', 1)
-test_cls('f', 2)
-test_cls('p', 3)
+a = test_cls('a', 0, a)
+b = test_cls('b', 1, b)
+f = test_cls('f', 2, f)
+p = test_cls('p', 3, p)
 
-print("Total: ", total)
-print("True: ", true, "\r\nFalse: ", false)
+print(a)
+print(b)
+print(f)
+print(p)
+
+print('prec(a) =', precision(0, [a[0], b[0], f[0], p[0]]))
+print('prec(b) =', precision(1, [a[1], b[1], f[1], p[1]]))
+print('prec(f) =', precision(2, [a[2], b[2], f[2], p[2]]))
+print('prec(p) =', precision(3, [a[3], b[3], f[3], p[3]]))
+
+print('rec(a) =', recall(0, a))
+print('rec(b) =', recall(1, b))
+print('rec(f) =', recall(2, f))
+print('rec(p) =', recall(3, p))
