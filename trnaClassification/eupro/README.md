@@ -25,6 +25,8 @@ Original sequences of different length. Parsing-provided images resized to 80x80
    * accuracy = 96.2%
    * precision<sub>p</sub> = 94.2%        recall<sub>p</sub> = 98.5%
    * precision<sub>e</sub> = 98.4%        recall<sub>e</sub> = 93.9%
+
+Training time: 2200 sec
    
 ---------------------------------------------------------------------------------  
 
@@ -43,6 +45,8 @@ Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to
    * precision<sub>p</sub> = 92.4%        recall<sub>p</sub> = 96.1%
    * precision<sub>e</sub> = 96.0%        recall<sub>e</sub> = 92.1%
 
+Training time: 27000 sec
+
 --------------------------------------------------------------------------------- 
 
 **Vectors extended to sequences**
@@ -60,6 +64,8 @@ Original sequences of length 220. Extending trained model for vectorized data (e
    * precision<sub>p</sub> = 95.8%        recall<sub>p</sub> = 99.4% 
    * precision<sub>e</sub> = 99.4%        recall<sub>e</sub> = 95.6%
 
+Training time: 1300 sec
+
 --------------------------------------------------------------------------------- 
 
 **Images extended to sequences**
@@ -76,3 +82,5 @@ Original sequences of length 220. Extending trained model for image data (eupro/
    * accuracy = 97.8%
    * precision<sub>p</sub> = 96.2%        recall<sub>p</sub> = 99.4%  
    * precision<sub>e</sub> = 99.4%        recall<sub>e</sub> = 99.5%
+
+Training time: 3900 sec

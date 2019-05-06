@@ -175,7 +175,7 @@ model2.fit_generator(
     validation_data=generate_arrays_from_dir(data_valid,batch_size),
     validation_steps=int(valid_size/batch_size) - 1,
     epochs=epochs,
-    verbose=1,
+    verbose=2,
     callbacks=[csv_logger])
 
 model2.save_weights('weights.h5')
