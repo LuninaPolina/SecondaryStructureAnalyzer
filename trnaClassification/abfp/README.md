@@ -24,7 +24,7 @@ Original sequences of different length. Parsing-provided images resized to 80x80
 | F       	| 41  	| 22  	| 720 	| 29  	|
 | P       	| 2   	| 15  	| 18  	| 702 	|
 
-   * accuracy = 96.2%
+   * accuracy = 93.3%
    * precision<sub>a</sub> = 94.2%        recall<sub>a</sub> = 92.4%
    * precision<sub>b</sub> = 95.7%        recall<sub>b</sub> = 91.2%
    * precision<sub>f</sub> = 88.7%        recall<sub>f</sub> = 96.0%
