@@ -15,11 +15,11 @@ experimentName
 |      ├──weights.h5
 |      └──trace.log
 |      
-└───scripts
-|   ├──script1.py
-|   └──...
+└──scripts
+|  ├──script1.py
+|  └──...
 |
-└───README.md
+└──README.md
 ```
 
 Brief description:
