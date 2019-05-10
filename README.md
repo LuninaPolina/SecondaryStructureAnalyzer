@@ -29,6 +29,13 @@ Brief description:
 * scripts folder contains optional scripts for intermidiate data processing
 * README.md file should provide all the evaluation results for each model
 
+SecondaryStructureExtracter.exe:
+
+* parsing tool for data generation in vectorized (csv) and image (bmp) formats
+* input: -i data.fasta, -g grammar.yrd, -f [csv, bmp]
+* output: out.csv or out directory with bmp images
+* source code is available here: https://github.com/YaccConstructor/YaccConstructor/tree/Rider
+
 
 Links to articles with detailed explanation of the proposed approach motivations and usage:
 
