@@ -100,3 +100,45 @@ Original sequences of length 220. Extending trained model for vectorized data (a
    * precision<sub>p</sub> = 99.4%        recall<sub>p</sub> = 95.7%
 
 Training time: 3000 sec
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+
+Models for sequence data were also evaluated on 2 complete tRNA databases (http://trna.ie.niigata-u.ac.jp/cgi-bin/trnadb/index.cgi and http://gtrnadb2009.ucsc.edu/).
+
+Total samples: 540185 (archaeal: 13202, bacterial: 514366, fungi: 4720, plant: 7897)
+
+Test results:
+
+**Vectors extended to sequences**
+
+| res\lbl 	| A     	| B   	   | F   	| P   	|
+|---------	|-------	|---------|-----	|-----	|
+| A       	| 13118 	| 29279  	| 92  	| 151  |
+| B       	| 50  	  | 482953 	| 39   | 59   |
+| F       	| 24   	 | 1145    | 4563	| 71  	|
+| P       	| 10    	| 989    	| 26  	| 7616 |
+
+   * accuracy = 94.1%
+   * precision<sub>a</sub> = 30.8%        recall<sub>a</sub> = 99.4%
+   * precision<sub>b</sub> = 100.0%       recall<sub>b</sub> = 93.9%
+   * precision<sub>f</sub> = 78.6%        recall<sub>f</sub> = 96.7%
+   * precision<sub>p</sub> = 88.1%        recall<sub>p</sub> = 96.4%
+   
+---------------------------------------------------------------------------------
+
+**Images extended to sequences**
+
+| res\lbl 	| A     	| B   	   | F   	| P   	|
+|---------	|-------	|---------|-----	|-----	|
+| A       	| 13077 	| 20091  	| 104 	| 100  |
+| B       	| 81  	  | 492118 	| 57   | 127  |
+| F       	| 32   	 | 1082    | 4542	| 89  	|
+| P       	| 12    	| 1075   	| 17  	| 7581 |
+
+   * accuracy = 95.8%
+   * precision<sub>a</sub> = 39.2%        recall<sub>a</sub> = 99.1%
+   * precision<sub>b</sub> = 99.9%        recall<sub>b</sub> = 95.7%
+   * precision<sub>f</sub> = 79.1%        recall<sub>f</sub> = 96.2%
+   * precision<sub>p</sub> = 87.3%        recall<sub>p</sub> = 96.0%
+   
