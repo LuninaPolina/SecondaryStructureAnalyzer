@@ -84,3 +84,36 @@ Original sequences of length 220. Extending trained model for image data (eupro/
    * precision<sub>e</sub> = 99.4%        recall<sub>e</sub> = 99.5%
 
 Training time: 3900 sec
+
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+
+Models for sequence data were also evaluated on 2 complete tRNA databases (http://trna.ie.niigata-u.ac.jp/cgi-bin/trnadb/index.cgi and http://gtrnadb2009.ucsc.edu/).
+
+Total samples: 615564 (prokaryotic: 527568, eukaryotic: 87996)
+
+Test results:
+
+**Vectors extended to sequences**
+
+| res\lbl 	| P    	  | E     	|
+|---------	|--------	|-------	|
+| P       	| 525464 	| 3048  	|
+| E       	| 2104   	| 84948 	|
+  
+   * accuracy = 99.2%
+   * precision<sub>p</sub> = 99.4%        recall<sub>p</sub> = 99.6% 
+   * precision<sub>e</sub> = 97.6%        recall<sub>e</sub> = 96.5%
+   
+---------------------------------------------------------------------------------
+
+**Images extended to sequences**
+
+| res\lbl 	| P    	  | E     	|
+|---------	|--------	|-------	|
+| P       	| 525426 	| 2716  	|
+| E       	| 2142   	| 85280 	|
+  
+   * accuracy = 99.2%
+   * precision<sub>p</sub> = 99.5%        recall<sub>p</sub> = 99.6% 
+   * precision<sub>e</sub> = 97.5%        recall<sub>e</sub> = 96.9%
