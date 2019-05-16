@@ -1,6 +1,6 @@
 4 classes classification: archaeal, bacterial, fungi and plant tRNA sequences.
 
-Data: train/valid/test = 8000/3000/1000 total samples
+Data: train/valid/test = 8000/1000/3000 total samples
 
 Confusion matrix (CM) and metrics notations:
 
