@@ -1,34 +1,3 @@
-For each experiment the folder structure should be approximately like this:
-
-```
-experimentName
-|
-└──data
-|  └──datalinks.txt  
-|      
-├──models
-|   |
-|   └──modelName
-|      ├──model.py
-|      ├──model_test.py
-|      ├──model_visualization.py
-|      ├──weights.h5
-|      └──trace.log
-|      
-└──scripts
-|  ├──script1.py
-|  └──...
-|
-└──README.md
-```
-
-Brief description:
-
-* datalinks.txt -- file with links to some cloud storage with all neccessary data
-* models folder contains all models for this data processing; naming notation is model_ab_cd, where ab -- 2 first numbers of val loss, cd -- 2 first numbers of val accuracy for this model
-* scripts folder contains optional scripts for intermidiate data processing
-* README.md file should provide all the evaluation results for each model
-
 SecondaryStructureExtracter.exe:
 
 * parsing tool for data generation in vectorized (csv) and image (bmp) formats

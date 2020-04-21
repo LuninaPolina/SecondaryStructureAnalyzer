@@ -1,0 +1,19 @@
+input data:
+https://mega.nz/file/dexElQhL#n4fAw7NaXkY-bkRmOl5qodAe2v1DLWNf8Id2OB8XkM8
+
+output data
+https://mega.nz/file/sLpi1CIB#PH327Z2a97IGgO3v7GsBrTLeeWz74olnFo9YZ1aJKg8
+
+predicted data (step1/model1):
+https://mega.nz/file/RWwGiAxJ#YnQz05D8cMjLvtVnHj9p0mMl8580IdqAvwLWidwZaDA
+
+aligned data (step1/model1):
+https://mega.nz/file/cKxwHS7S#4RzKAy7yMmyOOdSbtNPdIbfpmoabmPQH8uQlPmC5yNk
+
+sequences:
+https://mega.nz/file/hb5gTC6a#dzqhzkTKFw0AUs7Z_RQ4V03TmC1jkc4Yh53_oVmK3dc
+
+reference database:
+https://mega.nz/file/dbpWwKJb#CZBtZB0Lt384OZuS3bhF-vZg5-EOb4TX2KWdmCf9tWA
+
+
