@@ -1,19 +1,19 @@
 input data:
-https://mega.nz/file/sPhBGZwB#gWEqDaAtDMCwzQk9Rx-C9Btceu3nxIu5zWRL7aqcwDc
+https://mega.nz/file/1aJAhQoI#wttVGdMcvTFZt-ryps_xqjpz3Rksp81yNvadcqLKB70
 
 output data
-https://mega.nz/file/pL5hkbYB#ytqW8ng-a2Z_uJRBuI1kwO69dwkSX6aQK3jwXWaFVzY
+https://mega.nz/file/tbYQhIzS#1NIiqAKcJ6CjtjuqZZrt_JSQjNLPTHeWBEijbJ1HqJg
 
 predicted data (step1/model1):
-https://mega.nz/file/sCgBBJ4S#R8y2vzRy1jfh9ZqVwldvyA5TrRek3ICUvVZsZm_esbo
+https://mega.nz/file/0SZizSSL#H0NEzowXMsPVd40vtTLo4tX6kPRDfh7pjX4vzdmRIRY
 
 aligned data (step1/model1):
-https://mega.nz/file/QShhSbqK#85Qv7bsTuT9uatxL3Jy97dME1LpAaqWN-HJtU6W33mU
+https://mega.nz/file/cDYiFCTA#DLAs9uqMSJqYv2CfpaUYmO4GmhBV-WFWcUnedsOcXCY
 
 sequences:
-https://mega.nz/file/9eoRFbCI#mMULXiudOngBONrO-8T_AZV86KspprGPnxU0GUda-XA
+https://mega.nz/file/lOAE3ALI#jDMav4ZbHRcS2R11xCeax8q5hUAqVzR_WFtr3WNTICY
 
 reference database:
-https://mega.nz/file/Ubo1RTDJ#r9IrVZqDWuHuNkthnV2pMqSsDIHvfMWCzYnvC_jw5L8
+https://mega.nz/file/xeZ0wCjC#zZ1eQjGZy-xnEik0fiOhdqqGdbR28zh8FAfkUJVDkug
 
 

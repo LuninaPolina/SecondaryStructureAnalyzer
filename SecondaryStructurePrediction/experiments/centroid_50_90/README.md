@@ -1,6 +1,6 @@
-Secondary structure prediction for sequences of fixed length = 90.
+Secondary structure prediction for sequences of length from 50 to 90.
 
-Data: train/valid/test = 19089/2120/5302 total samples.
+Data: train/valid/test = 102122/11346/28367 total samples.
 
 Database: RNAcentral, prediction tool: CentroidFold.
 
@@ -19,7 +19,7 @@ Results:
 
 | metrics 	| original  | aligned   |
 |-----------|-----------|-----------|
-| Precision | 	 67%    |   80%  	|
-| Recall  	|    75%    |   66% 	|
-| FMera    	|    68%    |   70%  	| 
+| Precision | 	 60%    |   71%  	|
+| Recall  	|    72%    |   61% 	|
+| FMera    	|    63%    |   63%  	| 
 
