@@ -1,15 +1,22 @@
+from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Model,Sequential
-from keras.layers import Conv2D, Input, Activation, BatchNormalization
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Reshape, Input, multiply, LeakyReLU
+from keras.layers import Activation, Dropout, Flatten, Dense, AveragePooling2D
 from keras import backend as K
+from keras import regularizers
 from keras import layers
 from keras.preprocessing import image
+from keras.layers import BatchNormalization
 from keras.callbacks import CSVLogger
 from keras import optimizers
 import tensorflow as tf
 import numpy as np
 import random as rn
 from skimage.io import imread
+from skimage.util import invert , img_as_ubyte
 import os
+from tensorflow.python.ops.math_ops import square
 import math
 
 os.environ['PYTHONHASHSEED'] = '0'
@@ -20,32 +27,34 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-input_train = '../../data/data_predicted/train/'
-input_valid = '../../data/data_predicted/valid/'
-output_train = '../../data/data_aligned/train/'
-output_valid = '../../data/data_aligned/valid/'
+input_train = '/home/polina/1tb/ss_prediction/centroid_90/redone/data_p/train/'
+input_valid = '/home/polina/1tb/ss_prediction/centroid_90/redone/data_p/valid/'
+output_train = '/home/polina/1tb/ss_prediction/centroid_90/redone/data_a/train/'
+output_valid = '/home/polina/1tb/ss_prediction/centroid_90/redone/data_a/valid/'
 
 img_size = 90
 dim = img_size * img_size
 batch_size = 8
 epochs = 100
-train_size = 40817
-valid_size = 4535
+train_size = 19089
+valid_size = 2120
 input_shape = (img_size, img_size, 1)
 
 def load_images(path):
     all_images = []
     for image_path in sorted(os.listdir(path)):
+        #print(path, image_path)
         img = imread(path + image_path , as_gray=True)
         all_images.append(img)
-    return np.array(all_images).reshape(len(all_images), img_size, img_size, 1)
+    return np.array(all_images).reshape(len(all_images),img_size,img_size,1)
 
 def res_unit(inputs, filters, kernel, activ): 
     x = inputs
     x = BatchNormalization()(x)
     for f in filters:
         x = Activation(activ)(x)
-        x = Conv2D(f, kernel_size=kernel, padding='same')(x)
+        x = Conv2D(f, kernel_size=kernel,
+                      padding='same')(x)
     return x
 
 
@@ -65,7 +74,7 @@ def res_network(units_num, filters, kernel=3, activ = 'relu'):
 
 model = res_network(5, [12, 10, 8, 6, 1])
 
-coeff = 8
+coeff = 7
  
 def weighted_loss(y_true, y_pred):
     y_true1, y_pred1 = y_true / 255, y_pred / 255
@@ -115,7 +124,7 @@ model.compile(loss=weighted_loss,
               optimizer=optimizers.Adagrad(lr=0.05),
               metrics = [f_mera])
 
-csv_logger = CSVLogger('training.log')
+csv_logger = CSVLogger('/home/polina/1tb/ss_prediction/centroid_90/redone/models_steps/step2/model1/training.log')
 
 model.fit(x_train, y_train, 
           validation_data=(x_valid, y_valid), 
@@ -125,4 +134,4 @@ model.fit(x_train, y_train,
           shuffle=True,
           callbacks=[csv_logger]) 
 
-model.save_weights('weights.h5')
+model.save_weights('/home/polina/1tb/ss_prediction/centroid_90/redone/models_steps/step2/model1/weights.h5')
