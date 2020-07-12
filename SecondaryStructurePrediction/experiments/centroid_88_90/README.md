@@ -19,7 +19,7 @@ Results:
 
 | metrics 	| original  | aligned   |
 |-----------|-----------|-----------|
-| Precision | 	 67%    |   80%  	|
-| Recall  	|    75%    |   66% 	|
-| FMera    	|    68%    |   70%  	| 
+| Precision | 	 66%    |   81%  	|
+| Recall  	|    78%    |   62% 	|
+| FMera    	|    69%    |   68%  	| 
 
