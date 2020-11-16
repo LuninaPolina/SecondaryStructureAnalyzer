@@ -1,0 +1,9 @@
+input vectors:
+https://mega.nz/#F!9GQh3IZC!YUtP3wk7DkanLNEEs73KSA
+
+reference database:
+https://mega.nz/#!hfwVCKLK!hTJmyN3hEcHFrZAgDTvkgxuqmBsSyMYFkpIKgAukevM
+
+model weights:
+https://mega.nz/file/NawmRLKQ#2uEjDCelrTVrKkwq8rxCUnf4s0zIPIckYq6OskoTGyc
+

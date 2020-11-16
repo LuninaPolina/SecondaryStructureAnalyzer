@@ -10,6 +10,7 @@ from keras.callbacks import CSVLogger
 from keras.utils import plot_model
 from keras.utils.vis_utils import model_to_dot
 
+
 import pandas as pd
 import csv
 
@@ -22,6 +23,7 @@ import numpy as np
 import tensorflow as tf
 import random as rn
 import struct
+import glob
 
 #Для одинакового результата при разных запусках.
 os.environ['PYTHONHASHSEED'] = '0'
@@ -32,14 +34,17 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-img_size = 80
-batch_size = 64
-epochs = 300
-train_size = 8000
-valid_size = 1000
+#specify data paths here
+data ='test'
+weights = 'weights.h5'
 
-data_train ='../../data/train'
-data_valid ='../../data/valid'
+
+img_size = 80
+
+a = [0, 0, 0, 0]
+b = [0, 0, 0, 0]
+f = [0, 0, 0, 0]
+p = [0, 0, 0, 0]
 
 model = Sequential()
 
@@ -82,39 +87,41 @@ model.add(Dropout(0.5))
 model.add(Dense(4))
 model.add(Activation('softmax'))
 
-
-model.compile(loss='categorical_crossentropy',
-              optimizer=
-              optimizers.Adagrad(lr=0.05),
-              metrics=['accuracy'])
-
-train_datagen = ImageDataGenerator()
-valid_datagen = ImageDataGenerator()
+model.load_weights(weights)
 
 
+def precision(cl, row):
+    return row[cl] / sum(row)
 
-train_generator = train_datagen.flow_from_directory(
-        data_train,  
-        target_size=(img_size, img_size),
-        batch_size=batch_size,
-        class_mode='categorical')  
+def recall(cl, col):
+    return col[cl] / sum(col)
+    
+def test_cls(cls_name, cls_num, res):
+    files = [f for f in glob.glob(data + '/' + cls_name + '/*.bmp')]
+    for f in files:
+        img = image.load_img(f, target_size=(img_size, img_size))
+        img = image.img_to_array(img)
+        img = np.expand_dims(img, axis=0)
+        pred = model.predict_classes(img)
+        res[pred[0]] += 1
+    return res
 
+a = test_cls('a', 0, a)
+b = test_cls('b', 1, b)
+f = test_cls('f', 2, f)
+p = test_cls('p', 3, p)
 
-valid_generator = valid_datagen.flow_from_directory(
-        data_valid,
-        target_size=(img_size, img_size),
-        batch_size=batch_size,
-        class_mode='categorical')
+print(a)
+print(b)
+print(f)
+print(p)
 
-csv_logger = CSVLogger('training.log')
+print('prec(a) =', precision(0, [a[0], b[0], f[0], p[0]]))
+print('prec(b) =', precision(1, [a[1], b[1], f[1], p[1]]))
+print('prec(f) =', precision(2, [a[2], b[2], f[2], p[2]]))
+print('prec(p) =', precision(3, [a[3], b[3], f[3], p[3]]))
 
-model.fit_generator(
-    train_generator,
-    steps_per_epoch=int(train_size/batch_size) - 1,
-    validation_data=valid_generator,
-    validation_steps=int(valid_size/batch_size) - 1,
-    epochs=epochs,
-    verbose=2,
-    callbacks=[csv_logger])
-
-model.save_weights('weights.h5')
+print('rec(a) =', recall(0, a))
+print('rec(b) =', recall(1, b))
+print('rec(f) =', recall(2, f))
+print('rec(p) =', recall(3, p))

@@ -35,8 +35,9 @@ K.set_session(sess)
 arr_length = 3028
 fp, fn, tp, tn = 0, 0, 0, 0
 
-data ='../../data/test.csv'
-db_file = '../../data/ref_db.csv'
+#specify data paths here
+data = 'test.csv'
+db_file = 'ref_db.csv'
 weights = 'weights.h5'
 
 model = Sequential()

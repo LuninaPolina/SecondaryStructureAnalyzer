@@ -34,13 +34,14 @@ K.set_session(sess)
 
 arr_length = 3028
 batch_size = 64
-epochs = 1000
+epochs = 1500
 train_size = 8000
 valid_size = 1000
 
-data_train ='../../data/train.csv'
-data_valid ='../../data/valid.csv'
-db_file = '../../data/ref_db.csv'
+#specify data paths here
+data_train ='train.csv'
+data_valid ='valid.csv'
+db_file = 'ref_db.csv'
 
 model = Sequential()
 
@@ -72,12 +73,15 @@ model.add(Activation('relu'))
 model.add(Dropout(0.75))
 
 model.add(Dense(64))
-model.add(Activation('sigmoid'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.5))
 
 model.add(Dense(4))
-model.add(Activation('sigmoid'))
+model.add(Activation('softmax'))
 
-model.compile(loss='binary_crossentropy',
+model.compile(loss='categorical_crossentropy',
               optimizer=
               optimizers.Adagrad(lr=0.05),
               metrics=['accuracy'])

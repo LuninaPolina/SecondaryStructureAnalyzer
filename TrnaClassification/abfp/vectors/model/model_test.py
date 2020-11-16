@@ -32,10 +32,9 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-
-
-data ='../../data/test.csv'
-db_file = '../../data/ref_db.csv'
+#specify data paths here
+data = 'test.csv'
+db_file = 'ref_db.csv'
 weights = 'weights.h5'
 
 a = [0, 0, 0, 0]
@@ -43,35 +42,23 @@ b = [0, 0, 0, 0]
 f = [0, 0, 0, 0]
 p = [0, 0, 0, 0]
 
-img_size = 80
-input_length = 220
-
-if K.image_data_format() == 'channels_first':
- input_shape = (3, img_size, img_size)
-else:
- input_shape = (img_size, img_size, 3)
+arr_length = 3028
 
 model = Sequential()
 
-model.add(Dropout(0.05, input_shape=(input_length,)))
+model.add(Dropout(0.3, input_shape=(arr_length,)))
 
-model.add(Dense(512))
+model.add(Dense(8194))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
-model.add(Dense(1024))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
+model.add(Dropout(0.9))
 
 model.add(Dense(2048))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
-model.add(Dense(30420))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-
-model.add(Dropout(0.3))
+model.add(Dropout(0.9))
 
 model.add(Dense(1024))
 model.add(BatchNormalization())
@@ -79,13 +66,8 @@ model.add(Activation('relu'))
 
 model.add(Dropout(0.9))
 
+
 model.add(Dense(512))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-
-model.add(Dropout(0.9))
-
-model.add(Dense(128))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
@@ -110,21 +92,15 @@ def generate_arrays(path):
     batch_y = []
     for ln in r:
         if len(ln) > 0:
-            for i in range(1,len(ln)):
-                if ln[i] == "A": ln[i] = "2"
-                elif ln[i] == "C": ln[i] = "3"
-                elif ln[i] == "G": ln[i] = "5"
-                elif ln[i] == "T": ln[i] = "7"
-                else: ln[i] = "0"
-            X = np.array(ln[1:len(ln)],dtype=np.uint32)
+            x = np.array(list(np.array(ln[1:(len(ln))],dtype=np.uint32).tobytes()))
             y = [1, 0, 0, 0]
             if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'b':
-                y = [0, 1, 0, 0]
+                    y = [0, 1, 0, 0]
             if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'f':
-                y = [0, 0, 1, 0]
+                    y = [0, 0, 1, 0]
             if db.loc[db['id'] == int(ln[0][1:])].values[0][2] == 'p':
-                y = [0, 0, 0, 1]
-            batch_x.append(np.array(X))
+                    y = [0, 0, 0, 1]
+            batch_x.append(np.array(x))
             batch_y.append(y)
     return np.array(batch_x), np.array(batch_y)
 
@@ -164,6 +140,3 @@ print('rec(a) =', recall(0, a))
 print('rec(b) =', recall(1, b))
 print('rec(f) =', recall(2, f))
 print('rec(p) =', recall(3, p))
-
-
-

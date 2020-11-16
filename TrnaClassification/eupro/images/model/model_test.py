@@ -37,7 +37,8 @@ K.set_session(sess)
 img_size = 80
 total, fp, fn, tp, tn = 0, 0, 0, 0, 0
 
-data_dir ='../../data/test'
+#specify data paths here
+data_dir ='test'
 weights = 'weights.h5'
 
 model = Sequential()

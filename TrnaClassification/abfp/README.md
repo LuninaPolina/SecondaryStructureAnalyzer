@@ -15,7 +15,6 @@ Approaches (on the same data):
 
 Original sequences of different length. Parsing-provided images resized to 80x80
 
-1. model_30_94
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
@@ -38,7 +37,6 @@ Training time: 1200 sec
 
 Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to bytes
 
-1. model_51_88
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
@@ -59,9 +57,8 @@ Training time: 33000 sec
 
 **Images extended to sequences**
 
-Original sequences of length 220. Extending trained model for image data (abfp/images/models/model_30_94)
+Original sequences of length 220. Extending trained model for image data (abfp/images/model)
 
-1. model_17_95
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|
@@ -82,9 +79,8 @@ Training time: 3000 sec
 
 **Vectors extended to sequences**
 
-Original sequences of length 220. Extending trained model for vectorized data (abfp/vectors/models/model_51_88)
+Original sequences of length 220. Extending trained model for vectorized data (abfp/vectors/model)
 
-1. model_18_96
 
 | res\lbl 	| A   	| B   	| F   	| P   	|
 |---------	|-----	|-----	|-----	|-----	|

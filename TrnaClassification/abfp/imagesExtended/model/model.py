@@ -33,11 +33,11 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-
-data_train ='../../data/train.csv'
-data_valid ='../../data/valid.csv'
-db_file = '../../data/ref_db.csv'
-weights = '../../../images/models/model_30_94/weights.h5'
+#specify data paths here
+data_train ='train.csv'
+data_valid ='valid.csv'
+db_file = 'ref_db.csv'
+weights = 'base_model_weights.h5'
 
 img_size = 80
 input_length = 220
