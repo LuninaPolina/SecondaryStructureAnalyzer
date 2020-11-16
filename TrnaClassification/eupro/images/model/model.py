@@ -38,8 +38,9 @@ epochs = 200
 train_size = 20000
 valid_size = 5000
 
-data_train ='../../data/train'
-data_valid ='../../data/valid'
+#specify data paths here
+data_train ='train'
+data_valid ='valid'
 
 model = Sequential()
 

@@ -15,7 +15,6 @@ Approaches (on the same data):
 
 Original sequences of different length. Parsing-provided images resized to 80x80
 
-1. model_08_97
 
 | res\lbl 	| P    	| E    	|
 |---------	|------	|------	|
@@ -34,7 +33,6 @@ Training time: 2200 sec
 
 Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to bytes
 
-1. model_16_95
 
 | res\lbl 	| P    	| E    	|
 |---------	|------	|------	|
@@ -51,9 +49,8 @@ Training time: 27000 sec
 
 **Vectors extended to sequences**
 
-Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors/models/model_16_95)
+Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors/model)
 
-1. model_05_98
 
 | res\lbl 	| P    	| E    	|
 |---------	|------	|------	|
@@ -70,9 +67,8 @@ Training time: 1300 sec
 
 **Images extended to sequences**
 
-Original sequences of length 220. Extending trained model for image data (eupro/images/models/model_08_97)
+Original sequences of length 220. Extending trained model for image data (eupro/images/model)
 
-1. model_06_98
 
 | res\lbl 	| P    	| E    	|
 |---------	|------	|------	|

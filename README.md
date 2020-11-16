@@ -7,6 +7,10 @@ Parsing tool:
 * [source code](https://github.com/YaccConstructor/YaccConstructor/tree/Rider)
 
 
+Neural networks:
+
+* requirements: Keras, TensorFlow-gpu 1x
+
 Data:
 
 * links to all required datasets and trained models weights are presented in datalinks.txt files in the each folder

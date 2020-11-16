@@ -32,61 +32,54 @@ tf.set_random_seed(1234)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
-
-
-data_train = '../../data/train.csv'
-data_valid = '../../data/valid.csv'
-db_file = '../../data/ref_db.csv'
-weights = '../../../images/models/model_08_97/weights.h5'
-
-img_size = 80
-input_length = 220
+arr_length = 3028
 batch_size = 64
-epochs = 150
+input_length = 220
 train_size = 20000
 valid_size = 5000
+epochs = 100
 
+#specify data paths here
+data_train = 'train.csv'
+data_valid = 'valid.csv'
+db_file = 'ref_db.csv'
+weights = 'base_model_weights.h5'
 
 model = Sequential()
 
-if K.image_data_format() == 'channels_first':
- input_shape = (3, img_size, img_size)
-else:
- input_shape = (img_size, img_size, 3)
+model.add(Dropout(0.3, input_shape=(arr_length,)))
 
-model.add(Conv2D(5, (3, 3), input_shape=input_shape))
-model.add(Activation('relu'))
-
-model.add(Flatten())
-
-model.add(Dropout(0.3))
-
-model.add(Dense(1024))
+model.add(Dense(8194, trainable=False))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
 model.add(Dropout(0.9))
 
-model.add(Dense(512))
+model.add(Dense(2048, trainable=False))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
 model.add(Dropout(0.9))
 
-model.add(Dense(128))
+model.add(Dense(1024, trainable=False))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+
+model.add(Dropout(0.9))
+
+model.add(Dense(512, trainable=False))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 
 model.add(Dropout(0.75))
 
-model.add(Dense(64))
+model.add(Dense(64, trainable=False))
 model.add(Activation('sigmoid'))
 
-model.add(Dense(1))
+model.add(Dense(1, trainable=False))
 model.add(Activation('sigmoid'))
 
 model.load_weights(weights)
-weights_list = model.get_weights()
 
 model2 = Sequential()
 
@@ -105,36 +98,12 @@ model2.add(BatchNormalization())
 model2.add(Activation('relu'))
 
 
-model2.add(Dense(30420))
+model2.add(Dense(3028))
 model2.add(BatchNormalization())
 model2.add(Activation('relu'))
 
-model2.add(Dropout(0.3))
 
-model2.add(Dense(1024, weights=[weights_list[2], weights_list[3]]))
-model2.add(BatchNormalization())
-model2.add(Activation('relu'))
-
-model2.add(Dropout(0.9))
-
-model2.add(Dense(512,  weights=[weights_list[8], weights_list[9]]))
-model2.add(BatchNormalization())
-model2.add(Activation('relu'))
-
-model2.add(Dropout(0.9))
-
-model2.add(Dense(128,  weights=[weights_list[14], weights_list[15]]))
-model2.add(BatchNormalization())
-model2.add(Activation('relu'))
-
-model2.add(Dropout(0.75))
-
-model2.add(Dense(64,  weights=[weights_list[20], weights_list[21]]))
-model2.add(Activation('sigmoid'))
-
-model2.add(Dense(1, weights=[weights_list[22], weights_list[23]]))
-model2.add(Activation('sigmoid'))
-
+model2.add(model)
 
 model2.compile(loss='binary_crossentropy',
               optimizer=

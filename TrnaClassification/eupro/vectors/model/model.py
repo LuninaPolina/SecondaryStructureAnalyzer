@@ -38,9 +38,10 @@ epochs = 1500
 train_size = 20000
 valid_size = 5000
 
-data_train ='../../data/train.csv'
-data_valid ='../../data/valid.csv'
-db_file = '../../data/ref_db.csv'
+#specify data paths here
+data_train ='train.csv'
+data_valid ='valid.csv'
+db_file = 'ref_db.csv'
 
 model = Sequential()
 
