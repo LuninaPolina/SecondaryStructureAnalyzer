@@ -1,0 +1,12 @@
+input sequences:
+https://mega.nz/folder/VaojUCZb#hhkepVz2yd5wQp_dVS3SbA
+
+reference database:
+https://mega.nz/file/AC4FiCAI#le5XzAwDBmYFPDzJzcTY1wlDDBAqb969kaw8y85YYBM
+
+model weights:
+https://mega.nz/file/ZDxXgQDC#IeeXsEoG_CtoKPDkv2RxfqlwnfcgDLFBuTGyoZ8D-UA
+
+base model weights:
+https://mega.nz/file/lHp2XJYK#NrArwcaVhtbMBza7oTheChyGfYk1YXlhxi-SZhjMa_g
+
