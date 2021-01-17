@@ -1,0 +1,11 @@
+input sequences:
+https://www.arb-silva.de/fileadmin/silva_databases/current/Exports/SILVA_138.1_SSURef_NR99_tax_silva.fasta.gz
+
+model weights:
+https://mega.nz/file/ZDxXgQDC#IeeXsEoG_CtoKPDkv2RxfqlwnfcgDLFBuTGyoZ8D-UA
+
+base model weights (with names and dropped layers):
+https://mega.nz/file/HwkQAC7Q#GY-h394S1MBoao9Puw3Zlbhmri1_nCZ6I10PBvCexcQ
+
+best model weights:
+https://mega.nz/file/7hVlzQbL#J1fdjE4URMVRhFamWObv7aROq0E7oSZqiFr5EKt-zEE
