@@ -40,11 +40,14 @@ def get_data(path, seqs_num = 8):
     found_samples = {"Bacteria" : 0, "Archaea" : 0, "Fungi" : 0, "Plantae" : 0}
 
     df = pd.DataFrame(columns = ["Id", "Seqs", "Label"])
+    row_list = []
+    df_ref = pd.DataFrame(columns = ["meta", "class", "nn1"])
     for i, record in enumerate(SeqIO.parse(path, "fasta")): 
         #if i % 1000 == 0: # Progress
             #print(i)
-
         species = get_species_by_description(record.description)
+        id = record.id   
+        row_list.append({"ref_id" : id, "meta" : record.description, "class" : species, "nn1" : "none"})
         if species == "other": # Drop redundant samples
             continue
         
@@ -53,14 +56,14 @@ def get_data(path, seqs_num = 8):
                 break
             else:   
                 continue
-
-        id = record.id
         seqs = slice_seq(record.seq)
         if seqs.shape[0] >= seqs_num: # Drop excessive sequences
             seqs = seqs[:seqs_num]
             df = df.append({"Id" : id, "Seqs" : seqs, "Label" : species}, ignore_index = True)
             found_samples[species] += 1 
-    return df
+    df_ref = pd.DataFrame(row_list)
+    df_ref.index = df_ref.index.rename('id')
+    return df, df_ref
 
 def process_file(path):
     df = pd.read_pickle(path)
@@ -88,14 +91,18 @@ def process_file(path):
     return x,y
 
 if __name__ == "__main__":
-    df = get_data("../../../../../data/SILVA_138.1_SSURef_NR99_tax_silva.fasta")
-    x = df.Seqs.values
+    df, df_ref = get_data("../../../../../data/SILVA_138.1_SSURef_NR99_tax_silva.fasta")
+    x = df.iloc[:, :-1]
     y = df.Label.values
     from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(x,y)
-    df_train = pd.DataFrame(X_train)
+    df_ref.loc[df_ref.ref_id.isin(X_train.Id), "nn1"] = "train"
+    df_ref.loc[df_ref.ref_id.isin(X_test.Id), "nn1"] = "test"
+    df_ref = df_ref.drop("ref_id", axis = 1)
+    df_train = X_train.Seqs
     df_train["Label"] = y_train
     df.to_pickle("./data/train.pkl")
-    df_test = pd.DataFrame(X_test)
+    df_test = X_test.Seqs
     df_test["Label"] = y_test
     df.to_pickle("./data/test.pkl")
+    df_ref.to_csv("./data/ref_db.csv", sep = "\t")

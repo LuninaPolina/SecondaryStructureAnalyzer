@@ -6,7 +6,7 @@ from keras.layers import BatchNormalization, TimeDistributed, LSTM
 from keras import Input
 from keras import optimizers
 from keras.callbacks import EarlyStopping
-from data_processing import process_csv
+from data_processing import process_file
 
 # Old model with few layer dropped
 arr_length = 3028
