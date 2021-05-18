@@ -1,4 +1,4 @@
-# Secondary structure analysis research using the combination of formal grammars and neural networks
+# Secondary structure analysis research: formal grammars + neural networks
 
 
 ## Solution structure
@@ -22,7 +22,9 @@
 
 `./YaccConstructor/src/SecondaryStructureExtracter/bin/Debug/SecondaryStructureExtracter.exe -g 'grammar.txt' -i 'input_sequences.fasta' -o 'output_dir/'`
 
-additional argument: output file format -f csv (default -- bmp)
+Additional argument: output file format -f csv (default -- bmp)
+
+Grammar example is presented in the repo root folder
 
 
 ### Neural networks
@@ -40,10 +42,10 @@ additional argument: output file format -f csv (default -- bmp)
 
 ### Experiments
 
-* **16S detection** --- binary classifier that separates true 16s RNA sequences from random parts of genome
-* **Chimeras detection** --- not comleted research for chimeric sequences search in biological databases
-* **Secondary structure prediction** --- model for predicting RNA secondary structure contact map from parsing provided matrix
-* **TRNA classification** --- several trna classification problems solutions for small amount of classes
+* **16S detection** -- binary classifier that separates true 16s RNA sequences from random parts of genome
+* **Chimeras detection** -- not comleted research for chimeric sequences search in biological databases
+* **Secondary structure prediction** -- model for predicting RNA secondary structure contact map from parsing provided matrix
+* **TRNA classification** -- solutions for several trna classification tasks with small amount of classes
 
 
 ### Content
