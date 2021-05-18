@@ -1,0 +1,17 @@
+[<Start>]
+s1: stem<s0>
+any_str : any*[1..20]
+s0: any_str | any_str stem<s0> s0
+any: A | U | C | G
+stem1<s>: 
+      A s U 
+    | G s C 
+    | U s A 
+    | C s G
+stem2<s>: stem1<stem1<s>>
+stem<s>: 
+      A stem<s> U
+    | U stem<s> A
+    | C stem<s> G
+    | G stem<s> C
+    | stem1<stem2<s>>
