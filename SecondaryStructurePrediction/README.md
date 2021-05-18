@@ -1,21 +1,22 @@
-Current best model for RNA secondary structure prediction
+# Secondary structure conatcts prediction
 
 
-Data:
+## Data
 
   * 801 RNA sequences having length from 1 up to 100 from RNAstrand database
   * Dynamic train:test split (10%:90%, ... 90%:10%)
+  * Neural network input data -- parsing matrices, reference data -- contact matrices; both transformed to black-and-white images
 
 
-Neural Network:
+## Neural Network
 
   * 4 identical parallel ResNets united by weighted sum of their outputs and 1 final ResUnit
-  * Each ResNet consists of 5 ResUnits with 'add' short connection
-  * Each ResUnit contains 5 convolutional layers with kernels 13, 11, 9, 7, 5 and filters 12, 10, 8, 6, 1 respectively
-  * Dropout and L2 regularization to minimize overfitting, Adagrad optimizer, loss based on f1 minimization 
+  * Each ResNet consists of 5 ResUnits with 'add' shortcut connection
+  * Each ResUnit contains 5 convolutional layers with kernels (13, 11, 9, 7, 5) and filters (12, 10, 8, 6, 1) respectively
+  * Dropout, L2 regularization, Adagrad optimizer, loss based on f1 minimization 
 
   
-**Results** 
+## Results 
 
 
 | train:test | Precision  | Recall     | F1         |
