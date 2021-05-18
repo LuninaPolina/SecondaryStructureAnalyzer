@@ -5,7 +5,6 @@ Data:
 
   * 801 RNA sequences having length from 1 up to 100 from RNAstrand database
   * Dynamic train:test split (10%:90%, ... 90%:10%)
-  * Input and reference images can be downloaded via ;onks presented in data/datalinks.txt file
 
 
 Neural Network:
@@ -14,7 +13,6 @@ Neural Network:
   * Each ResNet consists of 5 ResUnits with 'add' short connection
   * Each ResUnit contains 5 convolutional layers with kernels 13, 11, 9, 7, 5 and filters 12, 10, 8, 6, 1 respectively
   * Dropout and L2 regularization to minimize overfitting, Adagrad optimizer, loss based on f1 minimization 
-
 
   
 **Results** 
