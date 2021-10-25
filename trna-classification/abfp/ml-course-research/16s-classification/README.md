@@ -1,14 +1,12 @@
-4 classes classification: archaea, bacteriae, fungi and plantae.
+# 16s rRNA 4 classes classification 
 
-Data: train/test = 24519/8173 total samples
+## Archaea, bacteriae, fungi and plantae
 
-Confusion matrix (CM) and metrics notations:
+ * Data: train/test = 24519/8173 total samples
+ * LSTM extending images-extended model
 
-  * CM rows -- classification results, CM columns -- expecred labels for each class
-  * accuracy = sum(CM<sub>pp</sub>) / sum(CM<sub>pq</sub>) for all p, q 
-  * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
-  * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
-  
+## Results on the test set
+
 | res\lbl  | Archea | Plant | Fungi | Bacteria |
 |----------|--------|-------|-------|----------|
 | Archea   | 1782 	| 0  	  | 0  	  | 17  	   |
