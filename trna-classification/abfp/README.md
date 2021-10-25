@@ -11,9 +11,11 @@ Confusion matrix (CM) and metrics notations:
   * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
   * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
 
-Approaches (on the same data):
+4 Approaches on the same data
+
+## Results on the test set
   
-**Images** 
+### Images 
 
 Original sequences of different length. Parsing-provided images resized to 80x80
 
@@ -35,7 +37,7 @@ Training time: 1200 sec
    
 ---------------------------------------------------------------------------------  
 
-**Vectors**
+### Vectors
 
 Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to bytes
 
@@ -57,7 +59,7 @@ Training time: 33000 sec
 
 --------------------------------------------------------------------------------- 
 
-**Images extended to sequences**
+### Images extended to sequences
 
 Original sequences of length 220. Extending trained model for image data (abfp/images/model)
 
@@ -79,7 +81,7 @@ Training time: 3000 sec
 
 --------------------------------------------------------------------------------- 
 
-**Vectors extended to sequences**
+### Vectors extended to sequences
 
 Original sequences of length 220. Extending trained model for vectorized data (abfp/vectors/model)
 
@@ -102,13 +104,14 @@ Training time: 3000 sec
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 
+## Global tests results
+
 Models for sequence data were also evaluated on 2 complete tRNA databases (http://trna.ie.niigata-u.ac.jp/cgi-bin/trnadb/index.cgi and http://gtrnadb2009.ucsc.edu/).
 
 Total samples: 540185 (archaeal: 13202, bacterial: 514366, fungi: 4720, plant: 7897)
 
-Test results:
 
-**Vectors extended to sequences**
+### Vectors extended to sequences
 
 | res\lbl 	| A     | B   	  | F   	| P    |
 |---------	|-------|--------|------|------|
@@ -125,7 +128,7 @@ Test results:
    
 ---------------------------------------------------------------------------------
 
-**Images extended to sequences**
+### Images extended to sequences
 
 | res\lbl | A     | B   	| F    | P    |
 |---------|-------|--------|------|------|
@@ -143,6 +146,6 @@ Test results:
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 
-**ML course research**
+## ML course research
 
 Several additional experiments conducted by ML course students by extending the results of these 4 models on different datasets and problems. See more information in the each folder.
