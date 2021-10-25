@@ -1,7 +1,7 @@
 # TRNA sequences classification tasks
 
-  * abfp -- archaeal VS bacterial VS plant VS fungi
-  * eupro -- eukaryotic VS prokaryotic
+  * abfp — archaeal VS bacterial VS plant VS fungi
+  * eupro — eukaryotic VS prokaryotic
 
 ## More information: 
   * [Комбинирование нейронных сетей и синтаксического анализа для обработки вторичной структуры последовательностей](https://github.com/YaccConstructor/articles/blob/master/2019/diploma/Polina%20Lunina/diploma.pdf)
