@@ -1,13 +1,11 @@
-6 classes classification: archaeal, bacterial, fungi, plant, animal and protist tRNA sequences.
+# TRNA 6 classes classification
 
-Data: train/valid/test = 12000/1500/4500 total samples
+## Archaeal, bacterial, fungi, plant, animal and protist
 
-Confusion matrix (CM) and metrics notations:
+ * Data: train/valid/test = 12000/1500/4500 total samples
+ * Extention of the images-extended model
 
-  * CM rows -- classification results, CM columns -- expecred labels for each class
-  * accuracy = sum(CM<sub>pp</sub>) / sum(CM<sub>pq</sub>) for all p, q 
-  * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
-  * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
+## Results on the test set
   
 | res\lbl | Archea | Bacteria | Fungi | Plant | Animal | Protist |
 |---------|--------|----------|-------|-------|--------|---------|
