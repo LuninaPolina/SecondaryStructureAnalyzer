@@ -25,7 +25,7 @@ K.set_session(sess)
 
 
 src_dir = '../../'
-model_dir = src_dir + 'models/model1/'
+model_dir = src_dir + 'model/'
 input_dir = src_dir + 'data/in/'
 output_dir = src_dir + 'data/out/'
 
