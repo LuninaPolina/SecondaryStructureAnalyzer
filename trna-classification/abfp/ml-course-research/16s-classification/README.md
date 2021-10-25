@@ -21,7 +21,6 @@ Confusion matrix (CM) and metrics notations:
    * mean precision: 86.97%
    * mean recall: 86.79%
    * mean f-score: 86.88%
-   * ____
    * precision<sub>Archea</sub> = 98.5%       recall<sub>Archea</sub> = 74.43%
    * precision<sub>Plant</sub> = 94.7%        recall<sub>Plant</sub> = 90.25%
    * precision<sub>Fungi</sub> = 90.7%        recall<sub>Fungi</sub> = 91.16%
