@@ -1,9 +1,8 @@
-# Secondary structure prediction: experiments on different datasets 
+# Secondary structure prediction
 
+## Experiments on different datasets 
 
-## Description
-
-  * Neural network input data -- parsing matrices, reference data -- contact matrices; both transformed to black-and-white images
+  * Neural network input data — parsing matrices, reference data — contact matrices; both transformed to black-and-white images
   * 10-fold cross-validation, all metrics are calculated for the best validation set
   * Sequences lenghts 1-200
   * 3 models on 3 different datasets:
