@@ -8,11 +8,8 @@ https://mega.nz/file/he4A3ZSC#_x4NfhWfXagLvFydn06hNfhZG-2u4Cdxj9omCLOlcFk
 original sequences:
 https://mega.nz/file/gCgkxDbI#mPW5UNzakADrPqkYIjb7fRMsJWiuoO6YbCsVQJzFx64
 
-best model weights:
-https://mega.nz/file/5KhwXRyD#sIj1pbIR9G3o6hMJnD1E_YrYsiWRBfczk4FTy-9kouw
-
-all folds output:
-https://mega.nz/file/4SxCxLQB#3rhbk9DpQ-aXrkGg_iM81Ap-Z6uSMTz_pJAIj4vsTvU
+models weights:
+https://mega.nz/file/pP43lKQK#iROXil0iv8zpbMeRb9BYpKUvSftql8_hE3orAvDOZF4
 
 big test images:
 https://mega.nz/file/dfhEmRwB#KYWGbUI0S_edhO_RrbZVIJL2VuNRhOhM8FoPPixJbAw

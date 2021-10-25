@@ -6,6 +6,7 @@
   * 801 RNA sequences having length from 1 up to 100 from RNAstrand database
   * Dynamic train:test split (10%:90%, ... 90%:10%)
   * 4 Parallel ResNets each containing 5 ResUnits
+  * Postprocessing: binarization with threshold=0.25
 
   
 ## Results on the test sets
