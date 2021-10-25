@@ -3,14 +3,6 @@
 ## Binary classification: eukaryotic VS prokaryotic sequences
 
  * Data: train/valid/test = 20000/5000/10000 total samples
-
- * Confusion matrix (CM) and metrics notations:
-
-   * CM rows -- classification results, CM columns -- expecred labels for each class
-   * accuracy = sum(CM<sub>pp</sub>) / sum(CM<sub>pq</sub>) for all p, q 
-   * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
-   * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
-
  * 4 approaches on the same data
  * Fully connected dense neural networks with one convolutional layer for images processing
 
