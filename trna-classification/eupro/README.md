@@ -11,9 +11,11 @@ Confusion matrix (CM) and metrics notations:
   * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
   * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
 
-Approaches (on the same data):
+4 approaches on the same data
+
+## Results on the test set
   
-**Images** 
+### Images 
 
 Original sequences of different length. Parsing-provided images resized to 80x80
 
@@ -31,7 +33,7 @@ Training time: 2200 sec
    
 ---------------------------------------------------------------------------------  
 
-**Vectors**
+### Vectors
 
 Origial sequences of length 220. Parsing-provided uint32 vectors decompressed to bytes
 
@@ -49,7 +51,7 @@ Training time: 27000 sec
 
 --------------------------------------------------------------------------------- 
 
-**Vectors extended to sequences**
+### Vectors extended to sequences
 
 Original sequences of length 220. Extending trained model for vectorized data (eupro/vectors/model)
 
@@ -67,7 +69,7 @@ Training time: 1300 sec
 
 --------------------------------------------------------------------------------- 
 
-**Images extended to sequences**
+### Images extended to sequences
 
 Original sequences of length 220. Extending trained model for image data (eupro/images/model)
 
@@ -86,13 +88,13 @@ Training time: 3900 sec
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 
+##Global test results
+
 Models for sequence data were also evaluated on 2 complete tRNA databases (http://trna.ie.niigata-u.ac.jp/cgi-bin/trnadb/index.cgi and http://gtrnadb2009.ucsc.edu/).
 
 Total samples: 615564 (prokaryotic: 527568, eukaryotic: 87996)
 
-Test results:
-
-**Vectors extended to sequences**
+### Vectors extended to sequences
 
 | res\lbl | P    	 | E     |
 |---------|--------|-------|
@@ -105,7 +107,7 @@ Test results:
    
 ---------------------------------------------------------------------------------
 
-**Images extended to sequences**
+### Images extended to sequences
 
 | res\lbl | P    	 | E     |
 |---------|--------|-------|
