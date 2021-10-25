@@ -104,7 +104,7 @@ Training time: 3000 sec
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 
-## Global tests results
+## Global test results
 
 Models for sequence data were also evaluated on 2 complete tRNA databases (http://trna.ie.niigata-u.ac.jp/cgi-bin/trnadb/index.cgi and http://gtrnadb2009.ucsc.edu/).
 
