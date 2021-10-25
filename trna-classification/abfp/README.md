@@ -11,7 +11,7 @@ Confusion matrix (CM) and metrics notations:
   * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
   * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
 
-4 Approaches on the same data
+4 approaches on the same data
 
 ## Results on the test set
   
