@@ -1,0 +1,15 @@
+input and output images:
+https://mega.nz/file/UK5EXD5T#LsmzB5p959s4NHGDDgrFxzXNk1PFtM5wvQh_rm3Sgwo
+
+reference database:
+https://mega.nz/file/5ThCnYSb#y_ekMfPcL7SqB_PkuAoh4s5E8_pvyPnoQQkpsEjvzNk
+
+original sequences:
+https://mega.nz/file/cf5y0ILZ#NpIvN8HMpOKbXJfHL-OKD-Sy8Yl-caVqMh63GpmpUbc
+
+best model weights:
+https://mega.nz/file/ZPpEAL5T#CkolpqVLfgctgh1hMsRiZDtQR6QQxI-rBuJGs3r1JIE
+
+big test images:
+https://mega.nz/file/dfhEmRwB#KYWGbUI0S_edhO_RrbZVIJL2VuNRhOhM8FoPPixJbAw
+

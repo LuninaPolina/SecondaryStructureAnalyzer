@@ -1,0 +1,19 @@
+input and output images:
+https://mega.nz/file/gGhyXLwZ#DfmI-MJOGc4r92pptxChzWqJz_anJ0m-s_GjeBN9JFQ
+
+reference databases:
+https://mega.nz/file/dPggyToI#V40fJ8HlnUWExnO6s1VtIij6ZnetfzcIj0ZYmmk5p_k
+https://mega.nz/file/he4A3ZSC#_x4NfhWfXagLvFydn06hNfhZG-2u4Cdxj9omCLOlcFk
+
+original sequences:
+https://mega.nz/file/gCgkxDbI#mPW5UNzakADrPqkYIjb7fRMsJWiuoO6YbCsVQJzFx64
+
+best model weights:
+https://mega.nz/file/5KhwXRyD#sIj1pbIR9G3o6hMJnD1E_YrYsiWRBfczk4FTy-9kouw
+
+all folds output:
+https://mega.nz/file/4SxCxLQB#3rhbk9DpQ-aXrkGg_iM81Ap-Z6uSMTz_pJAIj4vsTvU
+
+big test images:
+https://mega.nz/file/dfhEmRwB#KYWGbUI0S_edhO_RrbZVIJL2VuNRhOhM8FoPPixJbAw
+

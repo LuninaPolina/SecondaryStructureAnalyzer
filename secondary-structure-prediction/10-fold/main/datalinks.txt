@@ -7,6 +7,12 @@ https://mega.nz/file/EHpynLxR#_x4NfhWfXagLvFydn06hNfhZG-2u4Cdxj9omCLOlcFk
 original sequences:
 https://mega.nz/file/5Kp2iDSQ#KR0cWW-caAKcDKHPR7Kyt1srmiey2tWtR3OSIxVBRm8
 
-trained models weights:
-https://mega.nz/file/tSwyFbSY#WDhML_pItNi3PTnMsFjhvgA7iLzsXKoxTJP-2RsjJt8
+best model weights:
+https://mega.nz/file/oHhygDjC#1KYkRt44td968vqRTgvy6FsiX7GOhgw39nM5nt_YT4g
+
+all folds output:
+https://mega.nz/file/RXxGFLaA#lihxEFaJ_EMHZQWC8KwjY2WHdPoOET4Vyd9Ue_3JQjA
+
+big test images:
+https://mega.nz/file/dfhEmRwB#KYWGbUI0S_edhO_RrbZVIJL2VuNRhOhM8FoPPixJbAw
 
