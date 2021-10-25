@@ -1,4 +1,4 @@
-# Secondary structure prediction
+# RNA secondary structure prediction
 
 ## Experiments on different datasets 
 
