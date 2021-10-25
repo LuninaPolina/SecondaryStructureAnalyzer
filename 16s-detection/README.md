@@ -7,5 +7,9 @@
 
 ## Results on test set
 
-* TP = 2965, TN = 3400, FP = 65, FN = 609 
-* accuracy = 90.4%
+ * TP = 2965, TN = 3400, FP = 65, FN = 609 
+ * accuracy = 90.4%
+
+## More information:
+
+Grigorev S., Lunina P. The Composition of Dense Neural Networks and Formal Grammars for Secondary Structure Analysis //BIOINFORMATICS. – 2019. – С. 234-241.
