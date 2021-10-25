@@ -4,6 +4,7 @@
 
   * Sequence length = 512
   * Model was trained on vectorized data: train:valid:test = 21322:10234:7039
+  * Fully connected dense neural network
 
 ## Results on test set
 
