@@ -1,11 +1,11 @@
-# Binary classification: 16s RNA vs other genomic subsequences 
+# 16s rRNA detection
 
-## Data
+## Binary classification: 16s VS other genomic subsequences
 
-Sequence length = 512.
-Vectorized data: train.csv, valid.csv and test.csv containing 21322, 10234 and 7039 samples respectively.
+  * Sequence length = 512
+  * Model was trained on vectorized data: train:valid:test = 21322:10234:7039
 
-## Results
+## Results on test set
 
-* test results: TP = 2965, TN = 3400, FP = 65, FN = 609 
-* test accuracy = 90.4%
+* TP = 2965, TN = 3400, FP = 65, FN = 609 
+* accuracy = 90.4%
