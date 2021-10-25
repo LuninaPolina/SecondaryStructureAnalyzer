@@ -1,4 +1,6 @@
-4 classes classification: archaeal, bacterial, fungi and plant tRNA sequences.
+# 4 classes tRNA classification
+
+## Archaeal, bacterial, fungi and plant tRNA sequences
 
 Data: train/valid/test = 8000/1000/3000 total samples
 
