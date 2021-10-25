@@ -22,7 +22,7 @@
 
 `./YaccConstructor/src/SecondaryStructureExtracter/bin/Debug/SecondaryStructureExtracter.exe -g 'grammar.txt' -i 'input_sequences.fasta' -o 'output_dir/'`
 
-Additional argument: output file format -f csv (default -- bmp)
+Additional argument: output file format -f csv (default — bmp)
 
 Grammar example is presented in the repo root folder
 
@@ -42,16 +42,16 @@ Grammar example is presented in the repo root folder
 
 ### Experiments
 
-* **16S detection** -- binary classifier that separates true 16s RNA sequences from random parts of genome
-* **Chimeras detection** -- not comleted research for chimeric sequences search in biological databases
-* **Secondary structure prediction** -- model for predicting RNA secondary structure contact map from parsing provided matrix
-* **TRNA classification** -- solutions for several trna classification tasks with small amount of classes
+* **16S detection** — binary classifier that separates true 16s RNA sequences from random parts of genome
+* **Chimeras detection** — not comleted research for chimeric sequences search in biological databases
+* **Secondary structure prediction** — model for predicting RNA secondary structure contact map from parsing provided matrix
+* **TRNA classification** — solutions for several trna classification tasks with small amount of classes
 
 
 ### Content
 
 * Links to all required datasets and trained models weights are presented in data/datalinks.txt files 
-* Models code and logs are presented in models/ folder
+* Models code and logs are presented in model/ folder
 * All useful data processing scripts are stored in scripts/ folder
 
 
