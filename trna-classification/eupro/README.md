@@ -1,4 +1,6 @@
-Binary classification: eukaryotic vs prokaryotic tRNA sequences
+# 2 classes tRNA classification
+
+## Binary classification: eukaryotic VS prokaryotic sequences
 
 Data: train/valid/test = 20000/5000/10000 total samples
 
