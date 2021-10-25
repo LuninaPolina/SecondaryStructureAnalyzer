@@ -1,14 +1,13 @@
-9 classes classification: Actinobacteria, Bacteroidetes, Chlamidiae, Firmicutes, Fusobacteria, Proteobacteria, Spirochaetes, Tenericutes and other tRNA sequences.
+# TRNA 9 types classification
 
-Data: train/valid/test = 44000/5500/6750 total samples
+## Actinobacteria, Bacteroidetes, Chlamidiae, Firmicutes, Fusobacteria, Proteobacteria, Spirochaetes, Tenericutes and other
 
-Confusion matrix (CM) and metrics notations:
-
-  * CM rows -- classification results, CM columns -- expecred labels for each class
-  * accuracy = sum(CM<sub>pp</sub>) / sum(CM<sub>pq</sub>) for all p, q 
-  * precision<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>pq</sub>) for all q -- precision for fixed class p
-  * recall<sub>p</sub> = CM<sub>pp</sub> / sum(CM<sub>qp</sub>) for all q -- recall for fixed class p
-  
+  * Data: train/valid/test = 44000/5500/6750 total samples
+  * Extension of the images-extended model
+  * If the sequence type is not from these 8 ones than consider it as 'other' class
+ 
+ ## Results on the test set
+ 
 | res\lbl 	    | Actinobacteria | Bacteroidetes | Chlamidiae | Firmicutes | Fusobacteria | Proteobacteria | Spirochaetes | Tenericutes | other |
 |---------------|----------------|---------------|------------|------------|--------------|----------------|--------------|-------------|-------|
 |Actinobacteria | 562            | 4             | 6          | 21         | 0            | 13             | 4            | 0           | 140   |
