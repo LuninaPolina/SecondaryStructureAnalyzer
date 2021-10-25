@@ -1,0 +1,15 @@
+input sequences:
+https://mega.nz/file/geIzjSzB#fE4xtwQNbv4OKMop4Fe-xJkDePsXkm_YMQ6-bUdc-W0
+
+reference database:
+https://mega.nz/file/oXZBwY7b#nEl5O82xUMYIT0vLMCKi6mIW7D6kl9rowUga3_io5nY
+
+model weights:
+https://mega.nz/file/1GJ1VQTb#vCXJFBVnLAX-kRirm_cJ6RtuuDwQyDhUXU8_Aan3avA
+
+base model weights:
+https://mega.nz/file/xSB1VIYR#DZT5bgDxEM4_IjG7bW8GWJyVNbrp30oafrbYEO-ZoV0
+
+big test sequences:
+https://mega.nz/file/pbo3RSTD#Ag0qei1yHZ39CmYOQSuu0mqcJazA5E9mNscTIuimmNQ
+

@@ -1,5 +1,0 @@
-reference database:
-https://mega.nz/#!9LhHVS4T!R_VY0EhGy7RYml_8dr1PKeWPHxz_evTF6pyLU0JUodw
-
-uint32 vectors:
-https://mega.nz/#F!MHpDyCZI!NKSM9CYIE2q_BenceNPwmw

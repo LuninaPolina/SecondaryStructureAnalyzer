@@ -1,0 +1,5 @@
+input vectors:
+https://mega.nz/file/xSQTCYKD#5qkt9Opnu9KgrMqS1z-XdOvkpPxk-dP44YRDNN14PKQ
+
+model weights
+https://mega.nz/file/lLQEFD6A#1P5L83jS3DHcM7UMyavqRu9FYQ4Y25mf8IWG724LX5s

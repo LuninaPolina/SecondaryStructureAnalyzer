@@ -1,0 +1,8 @@
+reference database:
+https://mega.nz/file/kHBwWDoa#R_VY0EhGy7RYml_8dr1PKeWPHxz_evTF6pyLU0JUodw
+
+train images:
+https://mega.nz/file/FeZgxJIA#HQyWhaorfG76VJGwLZrEoc3iZfBiCNm1xep94CTw1_c
+
+valid images:
+https://mega.nz/file/1HQmnLJL#Fk7lOGwsc6CcaTv1JSGu5zwwhLeo3uOyQPz3noF3pTk
