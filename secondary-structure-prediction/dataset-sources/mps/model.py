@@ -24,8 +24,8 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 
-src_dir = '/home/polina/1tb/rs_pb/'
-model_dir = src_dir + 'models/10_fold/'
+src_dir = '../../'
+model_dir = src_dir + 'model/'
 input_dir = src_dir + 'data/in/'
 output_dir = src_dir + 'data/out/'
 
@@ -36,7 +36,7 @@ input_shape = (None, None, 1)
 
 #Data processing functions
 
-def binarize_output(img, coeff=0.6): #set each gray pixel of network prediction to black/white according to threshold coeff
+def binarize_output(img, coeff=0.25): #set each gray pixel of network prediction to black/white according to threshold coeff
     size = len(img)
     for i in range(size):
         for j in range(size):
@@ -47,6 +47,58 @@ def binarize_output(img, coeff=0.6): #set each gray pixel of network prediction 
                     img[i][j] = 0
     return img
 
+def get_multiplets(i0, j0, img):
+    multiplets = []
+    size = len(img)
+    for i in range(size):
+        if img[i0, i] == 255 and (i0, i) != (i0, j0) and i0 <= i:
+            multiplets.append((i0, i))
+        if img[j0, i] == 255 and (j0, i) != (i0, j0) and j0 <= i:
+            multiplets.append((j0, i))
+        if img[i, i0] == 255 and (i, i0) != (i0, j0) and i <= i0:
+            multiplets.append((i, i0))
+        if img[i, j0] == 255 and (i, j0) != (i0, j0) and i <= j0:
+            multiplets.append((i, j0))
+    return list(set(multiplets))
+
+def get_mps_pairs(img):
+    size = len(img)
+    mps_pairs = []
+    for i in range(size):
+        for j in range(i + 1, size):
+            if img[i][j] == 255:
+                mps = get_multiplets(i, j, img)
+                if len(mps) > 0:
+                    for m in mps:
+                        if not ((i, j), m) in mps_pairs and not (m, (i, j)) in mps_pairs:
+                            mps_pairs.append(((min(i, j), max(i, j)), (min(m[0], m[1]), max(m[0], m[1]))))
+
+    return mps_pairs
+
+def estimate_mps(in_dir, out_dir):
+    files = glob.glob(in_dir + '*.png')
+    cnt_mps, cnt_true_mps, cnt_cont, cnt_true_cont = 0, 0, 0, 0
+    for f_pred in files:
+        if f_pred.split('/')[-1].split('.')[0] in val_ids.split(' '):
+            f_true = f_pred.replace(in_dir, out_dir)
+            img_true = np.array(Image.open(f_true))
+            img_pred = np.array(Image.open(f_pred))
+            img_pred = binarize_output(img_pred, 0.2)
+            mps_true = get_mps_pairs(img_true)
+            mps_pred = get_mps_pairs(img_pred)
+            cnt_mps += len(mps_true)
+            for (m1, m2) in mps_true:
+                if (m1, m2) in mps_pred or (m2, m1) in mps_pred:
+                    cnt_true_mps += 1
+            cont_true = list(set([x[0] for x in mps_true] + [x[1] for x in mps_true]))
+            cont_pred = list(set([x[0] for x in mps_pred] + [x[1] for x in mps_pred]))
+            cnt_cont += len(cont_true)
+            for c in cont_true:
+                if c in cont_pred:
+                    cnt_true_cont += 1
+
+    print('predicted mps', cnt_true_mps, 'from', cnt_mps)
+    print('predicted mps contacts', cnt_true_cont, 'from', cnt_cont)
 
 def compare_images(img_true, img_pred): #calculate precision, recall and f1 for reference and prediction pictures
     tw, tb, fw, fb = 0, 0, 0, 0
@@ -279,13 +331,51 @@ def f1_loss(y_true, y_pred): #loss that is based on minimizing 1 - f1_metrics
     fw = K.sum(K.cast((1 - y_true1) * y_pred1, 'float32'), axis=[1, 2, 3])
     fb = K.sum(K.cast(y_true1 * (1 - y_pred1), 'float32'), axis=[1, 2, 3])
     prec = tw / (tw + fw + K.epsilon())
-    rec = tw / (tw + fb + K.epsilon())
+    rec =  tw / (tw + fb + K.epsilon())
 #two penalties, because we don't want precision ~ 100% and recall ~ 0% (or the oposite) -- the perfect case is when they are almost equal
     k1 = 1 -  K.abs(prec - rec) #penalty for huge difference in each picture
     k2 = 1 -  K.abs(K.mean(prec) - K.mean(rec)) #same, but generally for all dataset 
+    prec = 100 * prec
     f1 = k1 * k2 * 2 * prec * rec / (prec + rec + K.epsilon()) 
     return 1 - K.mean(f1)
 
+def f1_mps_loss(y_true, y_pred): #f1 loss that can consider the quality of multiplets prediction 
+    y_true1, y_pred1 = K.minimum(y_true / 255, 1), K.minimum(y_pred / 255, 1)
+    y_true1, y_pred1 = process_diag(y_true1), process_diag(y_pred1)
+    tw = K.sum(K.cast(y_true1 * y_pred1, 'float32'), axis=[1, 2, 3])
+    fw = K.sum(K.cast((1 - y_true1) * y_pred1, 'float32'), axis=[1, 2, 3])
+    fb = K.sum(K.cast(y_true1 * (1 - y_pred1), 'float32'), axis=[1, 2, 3])
+    prec = tw / (tw + fw + K.epsilon())
+    rec =  tw / (tw + fb + K.epsilon())
+    k1 = 1 -  K.abs(prec - rec) #penalty for huge difference in each picture
+    k2 = 1 -  K.abs(K.mean(prec) - K.mean(rec)) #same, but generally for all dataset
+    f1 = k1 * k2 * 2 * prec * rec / (prec + rec + K.epsilon())
+    row_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64')
+    col_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[1]), 1), 'int64')
+    mask_col = tf.keras.layers.Multiply()([col_has_mps, K.cast(y_true1, 'int64')])
+    mask_row = tf.transpose(tf.keras.layers.Multiply()([tf.transpose(K.cast(y_true1, 'int64'), [0, 2, 1, 3]), row_has_mps]), [0, 2, 1, 3])
+    mask = K.cast(K.greater(mask_row +  mask_col, 0), 'float32')
+    mps_total =  K.sum(mask)
+    mps_detected = K.sum(mask * y_pred1)
+    mps = (mps_detected + K.epsilon()) / (mps_total + K.epsilon())
+    f1 *= mps
+    return 1 - K.mean(f1)
+
+
+def mps_metrics(y_true, y_pred): #metrics that returns the ammount of predicted multiplets
+    y_true1, y_pred1 = K.minimum(y_true / 255, 1), K.minimum(y_pred / 255, 1)
+    y_true1, y_pred1 = process_diag(y_true1), process_diag(y_pred1)
+    row_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64')
+    col_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[1]), 1), 'int64')
+    mask_col = tf.keras.layers.Multiply()([col_has_mps, K.cast(y_true1, 'int64')])
+    mask_row = tf.transpose(tf.keras.layers.Multiply()([tf.transpose(K.cast(y_true1, 'int64'), [0, 2, 1, 3]), row_has_mps]), [0, 2, 1, 3])
+    mask = K.cast(K.greater(mask_row +  mask_col, 0), 'float32')
+    mps_total =  K.sum(mask)
+    mps_detected = K.sum(mask * y_pred1)
+    return mps_detected
+
+def f1_mps_metrics(y_true, y_pred): 
+    return f1_metrics(y_true, y_pred) * mps_metrics(y_true, y_pred)
 
 #Build model, generate data, launch training and testing
 files = glob.glob(input_dir + '*.png') #remove old mirrored samples
@@ -300,11 +390,10 @@ folds = split_files_kfold(folds_num)
 for step in range(folds_num):
 #define and compile model, all parametres here can be changed
     model = parallel_res_network(blocks_num=4, units_num=5, filters=[12, 10, 8, 6, 1], kernels=[13, 11, 9, 7, 5], activ='relu', bn=False, dr=0.1)
-    model.compile(optimizer=Adagrad(lr=0.005), loss=f1_loss, metrics=[precision, recall, f1_metrics])
+    model.compile(optimizer=Adagrad(lr=0.005), loss=f1_mps_loss, metrics=[precision, recall, mps_metrics, f1_mps_metrics])
 
     cl = CSVLogger(model_dir + 'training_' + str(step) + '.log')
-    es = EarlyStopping(monitor='val_f1_metrics', mode='max', verbose=1, patience=10) #stop training if after 20 epochs valid f1 is not any better 
-    mc = ModelCheckpoint(model_dir + 'weights_' + str(step) + '.h5', save_best_only=True, monitor='val_f1_metrics', mode='max')
+    mc = ModelCheckpoint(model_dir + 'weights_' + str(step) + '.h5', save_best_only=True, monitor='val_f1_mps_metrics', mode='max')
 
     test_files = folds[step]
     train_files = []
@@ -328,7 +417,7 @@ for step in range(folds_num):
                         epochs=epochs,
                         verbose=2,
                         shuffle=True,
-                        callbacks=[cl, es, mc])
+                        callbacks=[cl, mc])
 
     print('Training done for ', step, ' of kfold')
 

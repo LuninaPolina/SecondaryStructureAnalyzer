@@ -1,7 +1,6 @@
-# Secondary structure prediction: eperiments with different train set sizes on RNAstrand database
+# Secondary structure prediction
 
-
-## Description
+## Experiments with different train set sizes 
 
   * Neural network input data -- parsing matrices, reference data -- contact matrices; both transformed to black-and-white images 
   * 801 RNA sequences having length from 1 up to 100 from RNAstrand database

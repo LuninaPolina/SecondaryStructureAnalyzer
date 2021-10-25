@@ -24,9 +24,8 @@ sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
 
-#specify paths here
-src_dir = ''
-model_dir = src_dir + 'main/'
+src_dir = '../../'
+model_dir = src_dir + 'model/'
 input_dir = src_dir + 'data/in/'
 output_dir = src_dir + 'data/out/'
 
