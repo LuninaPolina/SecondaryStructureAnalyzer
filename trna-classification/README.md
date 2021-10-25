@@ -1,4 +1,4 @@
-# tRNA sequences classification tasks
+# TRNA sequences classification tasks
 
   * abfp -- archaeal VS bacterial VS plant VS fungi
   * eupro -- eukaryotic VS prokaryotic
