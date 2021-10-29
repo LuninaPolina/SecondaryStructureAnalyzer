@@ -339,7 +339,8 @@ def f1_loss(y_true, y_pred): #loss that is based on minimizing 1 - f1_metrics
     f1 = k1 * k2 * 2 * prec * rec / (prec + rec + K.epsilon()) 
     return 1 - K.mean(f1)
 
-def f1_mps_loss(y_true, y_pred): #f1 loss that can consider the quality of multiplets prediction 
+
+def f1_mps_loss2(y_true, y_pred): 
     y_true1, y_pred1 = K.minimum(y_true / 255, 1), K.minimum(y_pred / 255, 1)
     y_true1, y_pred1 = process_diag(y_true1), process_diag(y_pred1)
     tw = K.sum(K.cast(y_true1 * y_pred1, 'float32'), axis=[1, 2, 3])
@@ -347,8 +348,38 @@ def f1_mps_loss(y_true, y_pred): #f1 loss that can consider the quality of multi
     fb = K.sum(K.cast(y_true1 * (1 - y_pred1), 'float32'), axis=[1, 2, 3])
     prec = tw / (tw + fw + K.epsilon())
     rec =  tw / (tw + fb + K.epsilon())
-    k1 = 1 -  K.abs(prec - rec) #penalty for huge difference in each picture
-    k2 = 1 -  K.abs(K.mean(prec) - K.mean(rec)) #same, but generally for all dataset
+    k1 = 1 -  K.abs(prec - rec) 
+    k2 = 1 -  K.abs(K.mean(prec) - K.mean(rec)) 
+    f1 = k1 * k2 * 2 * prec * rec / (prec + rec + K.epsilon())
+
+    row_has_mps_t = K.expand_dims(K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64'), axis=-1)
+    col_has_mps_t = K.expand_dims(K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[1]), 1), 'int64'), axis=-1)
+    mask_col_t = col_has_mps_t * K.cast(y_true1, 'int64')
+    mask_row_t = tf.transpose(tf.transpose(K.cast(y_true1, 'int64'), [0, 2, 1, 3]) * row_has_mps_t, [0, 2, 1, 3])
+    mask_t = K.cast(K.greater(mask_row_t +  mask_col_t, 0), 'float32')
+    mps_total =  K.sum(mask_t)
+
+    y_pred1_mps = K.cast(K.greater(mask_t * y_pred1, 0.25), 'int64')
+    row_has_mps_p = K.expand_dims(K.cast(K.greater(K.sum(K.cast(y_pred1_mps + tf.transpose(y_pred1_mps, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64'), axis=-1)
+    col_has_mps_p = K.expand_dims(K.cast(K.greater(K.sum(K.cast(y_pred1_mps + tf.transpose(y_pred1_mps, [0, 2, 1, 3]), 'int64'), axis=[1]), 1), 'int64'), axis=-1)
+    mask_col_p = col_has_mps_p * K.cast(y_pred1_mps, 'int64')
+    mask_row_p = tf.transpose(tf.transpose(K.cast(y_pred1_mps, 'int64'), [0, 2, 1, 3]) * row_has_mps_p, [0, 2, 1, 3])
+    mask_p = K.cast(K.greater(mask_row_p +  mask_col_p, 0), 'float32')
+    mps_detected =  K.sum(mask_p)
+    mps = (mps_detected + K.epsilon()) / (mps_total + K.epsilon())
+    f1  = 0.2 * f1 + 0.8 * mps
+    return 1 - K.mean(f1)
+
+def f1_mps_loss(y_true, y_pred): #f1 loss that also considers multiplets contacts
+    y_true1, y_pred1 = K.minimum(y_true / 255, 1), K.minimum(y_pred / 255, 1)
+    y_true1, y_pred1 = process_diag(y_true1), process_diag(y_pred1)
+    tw = K.sum(K.cast(y_true1 * y_pred1, 'float32'), axis=[1, 2, 3])
+    fw = K.sum(K.cast((1 - y_true1) * y_pred1, 'float32'), axis=[1, 2, 3])
+    fb = K.sum(K.cast(y_true1 * (1 - y_pred1), 'float32'), axis=[1, 2, 3])
+    prec = tw / (tw + fw + K.epsilon())
+    rec =  tw / (tw + fb + K.epsilon())
+    k1 = 1 -  K.abs(prec - rec) 
+    k2 = 1 -  K.abs(K.mean(prec) - K.mean(rec)) 
     f1 = k1 * k2 * 2 * prec * rec / (prec + rec + K.epsilon())
     row_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64')
     col_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[1]), 1), 'int64')
@@ -362,7 +393,7 @@ def f1_mps_loss(y_true, y_pred): #f1 loss that can consider the quality of multi
     return 1 - K.mean(f1)
 
 
-def mps_metrics(y_true, y_pred): #metrics that returns the ammount of predicted multiplets
+def mps_metrics(y_true, y_pred): #metrics that calculates the number of predicted multiplets contacts
     y_true1, y_pred1 = K.minimum(y_true / 255, 1), K.minimum(y_pred / 255, 1)
     y_true1, y_pred1 = process_diag(y_true1), process_diag(y_pred1)
     row_has_mps = K.cast(K.greater(K.sum(K.cast(y_true1 + tf.transpose(y_true1, [0, 2, 1, 3]), 'int64'), axis=[2]), 1), 'int64')
@@ -374,7 +405,7 @@ def mps_metrics(y_true, y_pred): #metrics that returns the ammount of predicted 
     mps_detected = K.sum(mask * y_pred1)
     return mps_detected
 
-def f1_mps_metrics(y_true, y_pred): 
+def f1_mps_metrics(y_true, y_pred):
     return f1_metrics(y_true, y_pred) * mps_metrics(y_true, y_pred)
 
 #Build model, generate data, launch training and testing
@@ -384,76 +415,76 @@ for f in files:
         os.remove(f)
         os.remove(f.replace(input_dir, output_dir))
 
-folds_num = 10
-folds = split_files_kfold(folds_num)
-
-for step in range(folds_num):
 #define and compile model, all parametres here can be changed
-    model = parallel_res_network(blocks_num=4, units_num=5, filters=[12, 10, 8, 6, 1], kernels=[13, 11, 9, 7, 5], activ='relu', bn=False, dr=0.1)
-    model.compile(optimizer=Adagrad(lr=0.005), loss=f1_mps_loss, metrics=[precision, recall, mps_metrics, f1_mps_metrics])
+model = parallel_res_network(blocks_num=4, units_num=5, filters=[12, 10, 8, 6, 1], kernels=[13, 11, 9, 7, 5], activ='relu', bn=False, dr=0.1)
+model.compile(optimizer=Adagrad(lr=0.005), loss=f1_mps_loss, metrics=[precision, recall, mps_metrics, f1_mps_metrics])
 
-    cl = CSVLogger(model_dir + 'training_' + str(step) + '.log')
-    mc = ModelCheckpoint(model_dir + 'weights_' + str(step) + '.h5', save_best_only=True, monitor='val_f1_mps_metrics', mode='max')
+cl = CSVLogger(model_dir + 'training.log')
+mc = ModelCheckpoint(model_dir + 'weights.h5', save_best_only=True, monitor='val_f1_mps_metrics', mode='max')
 
-    test_files = folds[step]
-    train_files = []
-    for i in range(folds_num):
-        if i != step:
-            train_files += folds[i]
-    open(model_dir + 'datasets.txt', 'a').write(str(step) + ' step\ntrain:\n' + '\n'.join(train_files) + '\ntest:\n' + '\n'.join(test_files) + '\n')
+#this is the best train:valid split obtained from previous experiments
+val_ids = '34728_pdb2 34853_pdb2 35353_pdb2 34684_pdb2 35548_pdb2 35526_pdb2 35463_pdb2 34744_pdb2 35309_pdb2 35074_pdb2 34673_pdb2 34906_pdb2 34888_pdb2 34627_pdb2 34869_pdb2 34835_pdb2 34822_pdb2 35291_pdb2 34889_pdb2 34840_pdb2 34804_pdb2 34644_pdb2 34867_pdb2 35053_pdb2 34723_pdb2 34701_pdb2 35472_pdb2 35496_pdb2 34810_pdb2 34953_pdb2 35479_pdb2 35529_pdb2 35254_pdb2 34569_pdb2 35012_pdb2 35509_pdb2 34994_pdb2 35213_pdb2 35400_pdb2 35001_pdb2 35078_pdb2 34698_pdb2 35110_pdb2 34592_pdb2 35427_pdb2 34792_pdb2 35076_pdb2 34602_pdb2 34716_pdb2 35527_pdb2 34652_pdb2 35123_pdb2 35113_pdb2 34566_pdb2 35100_pdb2 35188_pdb2 35327_pdb2 34950_pdb2 35533_pdb2 34731_pdb2 34907_pdb2 34719_pdb2 34861_pdb2 34738_pdb2 35033_pdb2 34806_pdb2 34675_pdb2 35278_pdb2 34685_pdb2 34750_pdb2 34800_pdb2'
+
+train_files, test_files = [], []
+for f in glob.glob(input_dir + '*.png'):
+    if f.split('/')[-1].split('.')[0] in val_ids.split(' '):
+        test_files.append(f)
+    else:
+        train_files.append(f)
 
 #generate data and feed it into a compiled model
 
-    train_size = calc_data_size(input_dir, train_files, train_bs, mirror=True, repeat=2) 
-    test_size = calc_data_size(input_dir, test_files, 1)
-    print('train files:', train_size, 'test files:', test_size)
-    train_gen = generate_batches(input_dir, train_files, train_bs, mirror=True, repeat=2)
-    test_gen = generate_batches(input_dir, test_files, 1)
+train_size = calc_data_size(input_dir, train_files, train_bs, mirror=True, repeat=2) 
+test_size = calc_data_size(input_dir, test_files, 1)
+print('train files:', train_size, 'test files:', test_size)
+train_gen = generate_batches(input_dir, train_files, train_bs, mirror=True, repeat=2)
+test_gen = generate_batches(input_dir, test_files, 1)
 
-    model.fit_generator(train_gen,
-                        validation_data=test_gen,
-                        steps_per_epoch=int(train_size/train_bs),
-                        validation_steps=test_size,
-                        epochs=epochs,
-                        verbose=2,
-                        shuffle=True,
-                        callbacks=[cl, mc])
+model.fit_generator(train_gen,
+                    validation_data=test_gen,
+                    steps_per_epoch=int(train_size/train_bs),
+                    validation_steps=test_size,
+                    epochs=epochs,
+                    verbose=2,
+                    shuffle=True,
+                    callbacks=[cl, mc])
 
-    print('Training done for ', step, ' of kfold')
+print('Training done')
 
 #test model -- predict image for each sample and calculate precicion, recall and f1
-    model = parallel_res_network(blocks_num=4, units_num=5, filters=[12, 10, 8, 6, 1], kernels=[13, 11, 9, 7, 5], activ='relu', bn=False, dr=0.1)
-    model.load_weights(model_dir + 'weights_'  + str(step) + '.h5')
-    pred_dir = model_dir + 'predicted/'
-    if not os.path.exists(pred_dir):
-        os.mkdir(pred_dir)
-    files = glob.glob(input_dir + '*.png')
-    for f in files:
-        if f in test_files:
-            img = load_image(f)
-            res = model.predict(img)
-            k = len(img[0])
-            pixels = np.array(Image.new('L', (k, k), (255)))
-            for i in range(k):
-                for j in range(k):
-                    pixels[i][j] = min(res[0][i][j][0], 255)
-            Image.fromarray(pixels, 'L').save(f.replace(input_dir, pred_dir))
-    print('Prediction done for ', step, ' of kfold')
-    precs, recs, f1s = [], [], []
-    prec, rec, f1 = 0, 0, 0 
-    files_true = sorted(glob.glob(output_dir + '*.png'))
-    files_pred = sorted(glob.glob(pred_dir + '*.png'))
-    for f in files_pred:
-        estimate(f.replace(pred_dir, output_dir), f)
-    prec = round(sum(precs) / len(precs), 2)
-    rec = round(sum(recs) / len(recs), 2)
-    f1 = round(sum(f1s) / len(f1s), 2)
-    print('Precision =', prec, '\nRecall =', rec, '\nF1 =', f1)
-    open(model_dir + 'results.txt', 'a').write(str(step) + ' step\nprecicsion = ' + str(prec) + '\nrecall = ' + str(rec) + '\nf1 = ' + str(f1) + '\n')
-    os.system('rm -r ' + pred_dir)
-    files = glob.glob(input_dir + '*.png') #remove old mirrored samples
-    for f in files:
-        if '_mirror' in f:
-            os.remove(f)
-            os.remove(f.replace(input_dir, output_dir))
-    K.clear_session()
+model = parallel_res_network(blocks_num=4, units_num=5, filters=[12, 10, 8, 6, 1], kernels=[13, 11, 9, 7, 5], activ='relu', bn=False, dr=0.1)
+model.load_weights(model_dir + 'weights.h5')
+pred_dir = model_dir + 'predicted/'
+os.system('rm -r ' + pred_dir)
+if not os.path.exists(pred_dir):
+    os.mkdir(pred_dir)
+files = glob.glob(input_dir + '*.png')
+for f in files:
+    if f in test_files:
+        img = load_image(f)
+        res = model.predict(img)
+        k = len(img[0])
+        pixels = np.array(Image.new('L', (k, k), (255)))
+        for i in range(k):
+            for j in range(k):
+                pixels[i][j] = min(res[0][i][j][0], 255)
+        Image.fromarray(pixels, 'L').save(f.replace(input_dir, pred_dir))
+print('Prediction done')
+precs, recs, f1s = [], [], []
+prec, rec, f1 = 0, 0, 0 
+files_true = sorted(glob.glob(output_dir + '*.png'))
+files_pred = sorted(glob.glob(pred_dir + '*.png'))
+for f in files_pred:
+    estimate(f.replace(pred_dir, output_dir), f)
+prec = round(sum(precs) / len(precs), 2)
+rec = round(sum(recs) / len(recs), 2)
+f1 = round(sum(f1s) / len(f1s), 2)
+print('Precision =', prec, '\nRecall =', rec, '\nF1 =', f1)
+estimate_mps(pred_dir, output_dir)
+os.system('rm -r ' + pred_dir)
+files = glob.glob(input_dir + '*.png') #remove old mirrored samples
+for f in files:
+    if '_mirror' in f:
+        os.remove(f)
+        os.remove(f.replace(input_dir, output_dir))
+K.clear_session()

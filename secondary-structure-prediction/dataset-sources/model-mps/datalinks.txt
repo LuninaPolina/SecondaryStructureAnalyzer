@@ -8,7 +8,7 @@ original sequences:
 https://mega.nz/file/cf5y0ILZ#NpIvN8HMpOKbXJfHL-OKD-Sy8Yl-caVqMh63GpmpUbc
 
 best model weights:
-https://mega.nz/file/ZPpEAL5T#CkolpqVLfgctgh1hMsRiZDtQR6QQxI-rBuJGs3r1JIE
+https://mega.nz/file/gCwhTCRR#CkolpqVLfgctgh1hMsRiZDtQR6QQxI-rBuJGs3r1JIE
 
 big test images:
 https://mega.nz/file/dfhEmRwB#KYWGbUI0S_edhO_RrbZVIJL2VuNRhOhM8FoPPixJbAw
