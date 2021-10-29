@@ -64,6 +64,8 @@ Grammar example is presented in the repo root folder
 * [Комбинирование нейронных сетей и синтаксического анализа для предсказания вторичных структур генетических цепочек](https://github.com/YaccConstructor/articles/blob/master/2020/diploma/LuninaPolina/text/diploma.pdf)
 * [Комбинирование нейронных сетей и синтаксического анализа для обработки вторичной структуры последовательностей](https://github.com/YaccConstructor/articles/blob/master/2019/diploma/Polina%20Lunina/diploma.pdf)
 * [Комбинирование нейронных сетей и синтаксического анализа для предсказания вторичной структуры РНК](https://github.com/YaccConstructor/articles/tree/master/2021/diploma/Polina%20Lunina)
+ * [Genegram: RNA Secondary Structure Prediction Using Formal Grammars and Residual Neural Networks](https://github.com/YaccConstructor/articles/blob/master/InProgress/Genegram/main.pdf)
+
 
 
 -----
