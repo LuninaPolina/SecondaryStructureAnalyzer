@@ -1,3 +1,5 @@
+'''LGenerate data by different RNA secondary structure tools'''
+
 import os
 from Bio import SeqIO
 from PIL import Image
@@ -7,9 +9,9 @@ import time
 import pandas as pd
 
 
+#RNAstructure tool should be installed to the tools_dir because it is used for ct2db transformation
 tools_dir = ''
 data_dir = ''
-rs_dir = ''
 
 
 def mkdir(dir):
@@ -125,7 +127,8 @@ def from_e2efold(step, fasta_file, out_dir):
             meta, seq, dot = data[0][1:-3], data[1], data[2]
             img = dot2img(seq, dot)
             img.save(out_dir + meta + '.png')
-    
+   
+
 def from_spotrna(fasta_file, out_dir):
     tmp_dir = data_dir + 'SPOT-RNA/out/'
     mkdir(tmp_dir)
@@ -222,57 +225,3 @@ def from_centroid(fasta, out_dir): # --noncanonical
         img = dot2img(seq, dot)
         img.save(out_dir + meta + '.png')
     os.remove(out_file)
-
-    
-def calculate_fmera(true_dir, pred_dir, db_file):
-    db = pd.read_csv(db_file, sep='\t')
-    files_true = sorted(glob.glob(true_dir + '*.png'))
-    files_pred = sorted(glob.glob(pred_dir + '*.png'))
-    precs, recs, fmeras = [], [], []
-    for f in files_pred:
-        db_name = db.loc[db['id'] == int(f.split('/')[-1].split('.')[0])].values[0][2]
-        img_true = np.array(Image.open(f.replace(pred_dir, true_dir)))
-        img_pred = np.array(Image.open(f))
-        if len(img_true) <= 100 and 'RNAstrand' in db_name:
-            tw, tb, fw, fb = 0, 0, 0, 0
-            size = len(img_true)
-            for i in range(size):
-                for j in range(size):
-                    if img_true[i][j] != img_pred[i][j] and i != j:
-                        if int(img_pred[i][j]) == 0:
-                            fb += 1
-                        if int(img_pred[i][j]) == 255:
-                            fw += 1
-                    elif img_true[i][j] == img_pred[i][j] and i != j:
-                        if int(img_true[i][j]) == 255:
-                            tw += 1
-                        if int(img_true[i][j]) == 0:
-                            tb += 1
-            prec = tw/ (tw + fw + 0.00001)
-            rec = tw / (tw + fb + 0.00001)
-            fm = 2 * (prec * rec) / (prec + rec + 0.00001)
-            precs.append(prec)
-            recs.append(rec)
-            fmeras.append(fm)
-    print('prec =', str(sum(precs) / len(precs)))
-    print('rec =', str(sum(recs) / len(recs)))
-    print('fm =', str(sum(fmeras) / len(fmeras)))
-
-
-def rm_black(in_dir, out_dir):
-    def check_black(img):
-        for i in range(len(img)):
-            for j in range(len(img)):
-                if img[i][j] != 0 and i != j:
-                    return False
-        return True
-    files_in = glob.glob(in_dir + '*.png')
-    files_out = glob.glob(out_dir + '*.png')
-    for f_out in files_out:
-        f_in = f_out.replace(out_dir, in_dir)
-        if not f_in in files_in:
-            os.remove(f_out)
-        else:
-            img = np.array(Image.open(f_out))
-            if check_black(img):
-                os.remove(f_out)

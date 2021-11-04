@@ -1,3 +1,5 @@
+'''Neural network output estimation by accuracy, precision, recall, f1 and levenstern distance'''
+
 from PIL import Image
 import numpy as np
 from Bio import SeqIO
@@ -9,6 +11,7 @@ import matplotlib.pyplot as plt
 in_dir_true = ''
 in_dir_pred = ''
 log_file = ''
+
 
 dists = dict()
 precs, recs, f1s = [], [], []

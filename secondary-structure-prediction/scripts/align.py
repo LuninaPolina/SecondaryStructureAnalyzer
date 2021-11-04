@@ -1,3 +1,5 @@
+'''Alignment algorithm implemetatiom'''
+
 from PIL import Image
 import numpy as np
 from Bio.pairwise2 import format_alignment
@@ -7,6 +9,7 @@ from Bio.Alphabet import generic_rna
 import sys
 import glob
 from PIL import Image
+
 
 def img2dot(img):
     def binarize_output(img, coeff=0.25):
@@ -198,6 +201,7 @@ def align_sequence(seq, dot, increase_perc=0.5, min_pairs=3,connectivity_thresho
         sys.stderr.write("Brackets don't match on seq " + seq + " with dot " + dot)
     return seq, ''.join(result)
 
+
 def dot2img(seq, dot):
     size = len(seq)
     codes = {'A': 32, 'C': 64, 'G': 96, 'U': 128, 'T': 128}
@@ -220,16 +224,8 @@ def dot2img(seq, dot):
         pixels[i][i] = codes[seq[i]]
     return Image.fromarray(pixels)
 
+
 def align(img):
     seq, dot = img2dot(img)
     seq, dot = align_sequence(seq, dot)
     return dot2img(seq, dot)
-
-
-in_dir = '...'
-files = glob.glob(in_dir + '*.png')
-for f in files:
-    img = np.array(Image.open(f))
-    img_a = align(img)
-    img_a.save(f.replace('...','...'))
-

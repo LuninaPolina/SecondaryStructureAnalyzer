@@ -1,3 +1,5 @@
+'''Functions for measuring the time required for different tools to process the same batch of sequences'''
+
 import os
 from Bio import SeqIO
 from PIL import Image
@@ -42,7 +44,7 @@ def from_spotrna(fasta_file):
     command = 'cd ' + tools_dir + 'SPOT-RNA/ \nconda run -n venv python3 SPOT-RNA.py  --inputs ' + fasta_file + ' --outputs \'' + tmp_dir + '\'' + ' --gpu 0' 
     os.system(command)
     
-
+    
 def from_ipknot(fasta_file):
     seqs = list(SeqIO.parse(open(fasta_file), 'fasta'))
     seqs_dir = data_dir + 'seqs_ip/'
@@ -78,6 +80,12 @@ def from_knotty(fasta_file):
         os.system(command) 
 
 
+def from_genegram(asta_file):
+    out_dir = data_dir + 'out_genegram/'
+    command = 'cd ' + tools_dir + 'Genegram\nconda run -n env_g python -m genegram --seq_fasta ' + fasta_file + ' --out ' + out_dir
+    os.system(command)
+
+
 def process_parsed(in_dir, seq_file):
     codes = {'A': 32, 'C': 64, 'G': 96, 'U': 128, 'T': 128}
     def process_img(img, seq):
@@ -106,22 +114,20 @@ def process_parsed(in_dir, seq_file):
         img = process_img(img, seq) 
         os.remove(file)
         Image.fromarray(img).save(file.replace('.bmp', '.png'))
-    
-    
-def from_mymodel(fasta_file):
+        
+
+def from_genegram_old(fasta_file, grammar):
     parsed_dir = data_dir + 'parsed/'
     mkdir(parsed_dir)
-    command = 'cd /home/polina/Desktop/YaccConstructor/src/SecondaryStructureExtracter/bin/Debug/ \n./SecondaryStructureExtracter.exe -g "/home/polina/Desktop/grammar.txt" -i "' + fasta_file + '" -o "' + parsed_dir + '"'
-    os.system(command) 
-    
+    command = 'cd ' + tools_dir + 'YaccConstructor/src/SecondaryStructureExtracter/bin/Debug/ \n./SecondaryStructureExtracter.exe -g "' + grammar + '" -i "' + fasta_file + '" -o "' + parsed_dir + '"'
+    os.system(command)    
     process_parsed(parsed_dir, fasta_file)
-
     pred_dir = data_dir + 'pred/'
     mkdir(pred_dir)
     command = 'cd ' + data_dir + '\nconda run -n venv python3 mymodel_predict.py' 
-    os.system(command) 
-    
-    
+    os.system(command)     
+
+
 def prepare_fasta(in_fasta, out_fasta, size):
     seqs = list(SeqIO.parse(open(in_fasta), 'fasta')) 
     rn.shuffle(seqs)
@@ -134,12 +140,10 @@ def prepare_fasta(in_fasta, out_fasta, size):
                 out.write('>' + meta + '\n' + seq + '\n')
                 
 
-
 def run_test(from_tool, fasta_file):
     start = time.time()
     for i in range(10):
         from_tool(fasta_file)
     end = time.time()
-    print(from_tool, (end - start) / 10)
-    
+    print((end - start) / 10)
     

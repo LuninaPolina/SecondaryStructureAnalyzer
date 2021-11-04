@@ -1,13 +1,16 @@
+'''Parsing result to neural network input transormation functions'''
+
 from PIL import Image
 import numpy as np
 from Bio import SeqIO
 import glob
 
-in_dir = '/home/polina/Desktop/CMexp/experiments/centroid_50_90/pseudoknots/parsed/test/'
-out_dir = '/home/polina/Desktop/CMexp/experiments/centroid_50_90/pseudoknots/in/test/'
-seq_file = '/home/polina/Desktop/CMexp/experiments/centroid_50_90/pseudoknots/seq/test.fasta'
+
+in_dir = ''
+out_dir = ''
+seq_file = ''
 codes = {'A': 32, 'C': 64, 'G': 96, 'U': 128, 'T': 128}
-#size = 90
+
 
 def add_stems_and_diag(img, seq):
     for i in range(len(img)):
@@ -19,6 +22,7 @@ def add_stems_and_diag(img, seq):
         img[i][i] = codes[seq[i]]
     return img
 
+
 def mirror(img, flag):
     for i in range(len(img)):
         for j in range(i):
@@ -29,6 +33,7 @@ def mirror(img, flag):
                 img[i][j] = img[j][i]
                 img[j][i] = 0
     return img
+
 
 def add_borders(img, size):
     img_new = Image.new('L', (size, size), (0))
